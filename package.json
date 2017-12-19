@@ -1,0 +1,30 @@
+{
+	"name": "jasmine-fixture",
+	"license": "Apache-2.0",
+	"homepage": "https://github.com/MassimoFoti/jasmine-fixture",
+	"author": {
+		"name": "Massimo Foti",
+		"email": "massimo@massimocorner.com",
+		"url": "http://www.massimocorner.com/"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/MassimoFoti/jasmine-fixture"
+	},
+	"devDependencies": {
+		"gulp": "~3.9.0",
+		"gulp-changed": "~1.3.0",
+		"gulp-uglify": "~3.0.0",
+		"gulp-header": "~1.8.9",
+		"run-sequence": "~2.1.0",
+		"gulp-rename": "~1.2.2",
+		"gulp-sourcemaps": "~2.6.1",
+		"gulp-zip": "~4.0.0",
+		"karma": "~1.7.1",
+		"karma-chrome-launcher": "~2.2.0",
+		"karma-coverage": "~1.1.1",
+		"karma-html-reporter": "~0.2.7",
+		"karma-jasmine": "~1.1.0",
+		"jasmine-core": "~2.8.0"
+	}
+}
