@@ -37,7 +37,7 @@ if(typeof(window.jasmineFixture) === "undefined"){
 
 	/**
 	 * @param {String} url
-	 * @returns {String}
+	 * @return {String}
 	 */
 	jasmineFixture.readFixture = function(url){
 		var fullUrl = assembleUrl(url);
@@ -45,6 +45,20 @@ if(typeof(window.jasmineFixture) === "undefined"){
 			readIntoCache(fullUrl);
 		}
 		return jasmineFixture.cache[fullUrl];
+	};
+
+	/**
+	 * Change current configuration
+	 * @param {jasmineFixture.options} options
+	 * @return {jasmineFixture.options}
+	 */
+	jasmineFixture.setup = function(options){
+		jQuery.extend(config, options);
+		// Ensure we always have a trailing slash
+		if(config.basePath[config.basePath.length -1] !== "/") {
+			config.basePath += "/";
+		}
+		return config;
 	};
 
 	var assembleUrl = function(url){

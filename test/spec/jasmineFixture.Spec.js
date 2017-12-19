@@ -10,6 +10,7 @@ describe("jasmineFixture", function(){
 
 	afterEach(function(){
 		jasmineFixture.clearCache();
+		jasmineFixture.setup({basePath: "fixtures/"});
 	});
 
 	it("Requires jQuery in order to work", function(){
@@ -82,6 +83,28 @@ describe("jasmineFixture", function(){
 			expect(jQuery.ajax).toHaveBeenCalled();
 		});
 
+		it("The configured basePath is prepend to each XHR request", function(){
+			jasmineFixture.readFixture("first.htm");
+			expect(jQuery.ajax).toHaveBeenCalledWith({
+				url: "fixtures/first.htm",
+				async: false,
+				cache: false
+			});
+
+			jQuery.ajax.calls.reset();
+			jasmineFixture.setup({basePath: "fixtures/subfolder/"});
+			jasmineFixture.readFixture("nested.htm");
+			expect(jQuery.ajax).toHaveBeenCalledWith({
+				url: "fixtures/subfolder/nested.htm",
+				async: false,
+				cache: false
+			});
+			// Due to changed basePath this now points to a 404
+			expect(function(){
+				jasmineFixture.readFixture("first.htm");
+			}).toThrow();
+		});
+
 		it("Only one XHR call is executed if the same fixture is read multiple times", function(){
 			jasmineFixture.readFixture("first.htm");
 			jasmineFixture.readFixture("first.htm");
@@ -94,6 +117,34 @@ describe("jasmineFixture", function(){
 			expect(function(){
 				jasmineFixture.readFixture("missing.htm");
 			}).toThrow();
+		});
+
+	});
+
+	describe(".setup()", function(){
+
+		describe("If called with no arguments. Return an object containing name/value pairs:", function(){
+
+			it("basePath = fixtures/", function(){
+				expect(jasmineFixture.setup().basePath).toEqual("fixtures/");
+			});
+
+		});
+
+		describe("If a set of name/value pairs is passed as argument. Set the following configuration options:", function(){
+
+			it("basePath", function(){
+				expect(jasmineFixture.setup({basePath: "newPath/"}).basePath).toEqual("newPath/");
+			});
+
+		});
+
+		describe("If a basepath is set without a trailing slash:", function(){
+
+			it("One is added automatically", function(){
+				expect(jasmineFixture.setup({basePath: "newPath"}).basePath).toEqual("newPath/");
+			});
+
 		});
 
 	});
