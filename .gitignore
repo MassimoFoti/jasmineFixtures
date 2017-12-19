@@ -1,0 +1,7 @@
+node_modules/
+test/coverage
+test/**/TEST-AllTests.xml
+karma_html/
+.idea/dictionaries/**
+.idea/vcs.xml
+.idea/workspace.xml
