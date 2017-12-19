@@ -51,7 +51,7 @@ describe("jasmineFixture", function(){
 			expect(Object.keys(jasmineFixture.cache).length).toEqual(2);
 		});
 
-		it("Each key map an url to its response", function(){
+		it("Each key map an url to its content", function(){
 			var basePath = jasmineFixture.setup().basePath;
 
 			jasmineFixture.readFixture("first.htm");
@@ -122,7 +122,7 @@ describe("jasmineFixture", function(){
 			}).toThrow();
 		});
 
-		describe("Relies on jQuery.ajax to guess the appropriate type:", function(){
+		describe("Relies on jQuery.ajax to guess the appropriate MIME type:", function(){
 
 			it("HTML fixtures are returned as strings", function(){
 				expect(jQuery.type(jasmineFixture.readFixture("first.htm"))).toEqual("string");
