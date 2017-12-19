@@ -10,11 +10,12 @@ describe("jasmineFixture", function(){
 			"firstName": "ciccio",
 			"lastName": "pasticcio"
 		};
+		jasmineFixture.setup({basePath: FIXTURES_BASE_PATH});
 	});
 
 	afterEach(function(){
 		jasmineFixture.clearCache();
-		jasmineFixture.setup({basePath: "fixtures/"});
+		jasmineFixture.setup({basePath: FIXTURES_BASE_PATH});
 	});
 
 	it("Requires jQuery in order to work", function(){
@@ -51,10 +52,12 @@ describe("jasmineFixture", function(){
 		});
 
 		it("Each key map an url to its response", function(){
+			var basePath = jasmineFixture.setup().basePath;
+
 			jasmineFixture.readFixture("first.htm");
-			expect(jasmineFixture.cache["fixtures/first.htm"]).toEqual(firstText);
+			expect(jasmineFixture.cache[basePath + "first.htm"]).toEqual(firstText);
 			jasmineFixture.readFixture("second.htm");
-			expect(jasmineFixture.cache["fixtures/second.htm"]).toEqual(secondText);
+			expect(jasmineFixture.cache[basePath + "second.htm"]).toEqual(secondText);
 		});
 
 	});
@@ -88,21 +91,17 @@ describe("jasmineFixture", function(){
 		});
 
 		it("The configured basePath is prepend to each XHR request", function(){
+
+			var basePath = jasmineFixture.setup().basePath;
+
 			jasmineFixture.readFixture("first.htm");
 			expect(jQuery.ajax).toHaveBeenCalledWith({
-				url: "fixtures/first.htm",
+				url: basePath + "first.htm",
 				async: false,
 				cache: false
 			});
 
-			jQuery.ajax.calls.reset();
-			jasmineFixture.setup({basePath: "fixtures/subfolder/"});
-			jasmineFixture.readFixture("nested.htm");
-			expect(jQuery.ajax).toHaveBeenCalledWith({
-				url: "fixtures/subfolder/nested.htm",
-				async: false,
-				cache: false
-			});
+			jasmineFixture.setup({basePath: "missingfolder/"});
 			// Due to changed basePath this now points to a 404
 			expect(function(){
 				jasmineFixture.readFixture("first.htm");
@@ -142,8 +141,9 @@ describe("jasmineFixture", function(){
 
 		describe("If called with no arguments. Return an object containing name/value pairs:", function(){
 
-			it("basePath = fixtures/", function(){
-				expect(jasmineFixture.setup().basePath).toEqual("fixtures/");
+			it("basePath", function(){
+				var config = jasmineFixture.setup();
+				expect(config.basePath).toBeDefined();
 			});
 
 		});

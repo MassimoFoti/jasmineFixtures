@@ -1,0 +1,1 @@
+var FIXTURES_BASE_PATH = "fixtures/";

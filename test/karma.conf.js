@@ -13,12 +13,20 @@ module.exports = function(config) {
 		files: [
 			// Libs
 			"lib/jquery/jquery.min.js",
+			// Config
+			"test/fixtures.karma.config.js",
 
 			// Source files
 			"src/**/*.js",
 
 			// Test specs
-			"test/spec/*.Spec.js"
+			"test/spec/*.Spec.js",
+
+			// Fixtures
+			{pattern: "test/fixtures/**/*.json", watched: true, served: true, included: false},
+			{pattern: "test/fixtures/**/*.htm", watched: true, served: true, included: false},
+			{pattern: "test/fixtures/**/*.txt", watched: true, served: true, included: false},
+			{pattern: "test/fixtures/**/*.xml", watched: true, served: true, included: false}
 		],
 		// if true, Karma captures browsers, runs the tests and exits
 		singleRun: false,
