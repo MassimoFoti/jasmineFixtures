@@ -37,7 +37,7 @@ if(typeof(window.jasmineFixture) === "undefined"){
 
 	/**
 	 * @param {String} url
-	 * @return {String}
+	 * @return {String|Object}
 	 */
 	jasmineFixture.readFixture = function(url){
 		var fullUrl = assembleUrl(url);
@@ -70,9 +70,9 @@ if(typeof(window.jasmineFixture) === "undefined"){
 			url: url,
 			async: false, // Must be synchronous to ensure fixtures are loaded before test run
 			cache: false
-		}).done(function(data, textStatus, jqXHR){
+		}).done(function(data){
 			jasmineFixture.cache[url] = data;
-		}).fail(function(jqXHR, textStatus, errorThrown){
+		}).fail(function(jqXHR){
 			throw ("Failed to retrieve fixture at: " + url + " (status: " + jqXHR.status + ")");
 		});
 	};

@@ -2,10 +2,14 @@ describe("jasmineFixture", function(){
 
 	"use strict";
 
-	var firstText, secondText;
+	var firstText, secondText, firstJson;
 	beforeEach(function(){
 		firstText = "<div>Test1</div>";
 		secondText = "<div>Test2</div>";
+		firstJson = {
+			"firstName": "ciccio",
+			"lastName": "pasticcio"
+		};
 	});
 
 	afterEach(function(){
@@ -46,7 +50,7 @@ describe("jasmineFixture", function(){
 			expect(Object.keys(jasmineFixture.cache).length).toEqual(2);
 		});
 
-		it("Each key map an url to its response text", function(){
+		it("Each key map an url to its response", function(){
 			jasmineFixture.readFixture("first.htm");
 			expect(jasmineFixture.cache["fixtures/first.htm"]).toEqual(firstText);
 			jasmineFixture.readFixture("second.htm");
@@ -72,10 +76,10 @@ describe("jasmineFixture", function(){
 			spyOn(jQuery, "ajax").and.callThrough();
 		});
 
-		it("Returns the given fixture as string", function(){
+		it("Returns the content of the given fixture", function(){
 			expect(jasmineFixture.readFixture("first.htm")).toEqual(firstText);
 			expect(jasmineFixture.readFixture("second.htm")).toEqual(secondText);
-			expect(jQuery.type(jasmineFixture.readFixture("first.htm"))).toEqual("string");
+			expect(jasmineFixture.readFixture("first.json")).toEqual(firstJson);
 		});
 
 		it("Invokes jQuery.ajax to retrieve the fixture", function(){
@@ -118,6 +122,19 @@ describe("jasmineFixture", function(){
 				jasmineFixture.readFixture("missing.htm");
 			}).toThrow();
 		});
+
+		describe("Relies on jQuery.ajax to guess the appropriate type:", function(){
+
+			it("HTML fixtures are returned as strings", function(){
+				expect(jQuery.type(jasmineFixture.readFixture("first.htm"))).toEqual("string");
+			});
+
+			it("JSON fixtures are returned as objects", function(){
+				expect(jQuery.type(jasmineFixture.readFixture("first.json"))).toEqual("object");
+			});
+
+		});
+
 
 	});
 
