@@ -1,1 +1,1 @@
-var FIXTURES_BASE_PATH = "fixtures/";
+var FIXTURES_BASE_PATH = "fixtures";
