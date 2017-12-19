@@ -45,18 +45,18 @@ describe("jasmineFixture", function(){
 		});
 
 		it("Contains one key for each retrieved fixture", function(){
-			jasmineFixture.readFixture("first.htm");
+			jasmineFixture.read("first.htm");
 			expect(Object.keys(jasmineFixture.cache).length).toEqual(1);
-			jasmineFixture.readFixture("second.htm");
+			jasmineFixture.read("second.htm");
 			expect(Object.keys(jasmineFixture.cache).length).toEqual(2);
 		});
 
 		it("Each key map an url to its content", function(){
 			var basePath = jasmineFixture.setup().basePath;
 
-			jasmineFixture.readFixture("first.htm");
+			jasmineFixture.read("first.htm");
 			expect(jasmineFixture.cache[basePath + "first.htm"]).toEqual(firstText);
-			jasmineFixture.readFixture("second.htm");
+			jasmineFixture.read("second.htm");
 			expect(jasmineFixture.cache[basePath + "second.htm"]).toEqual(secondText);
 		});
 
@@ -65,7 +65,7 @@ describe("jasmineFixture", function(){
 	describe(".clearCache()", function(){
 
 		it("Flush/clear the cache", function(){
-			jasmineFixture.readFixture("first.htm");
+			jasmineFixture.read("first.htm");
 			expect(Object.keys(jasmineFixture.cache).length).toEqual(1);
 			jasmineFixture.clearCache();
 			expect(Object.keys(jasmineFixture.cache).length).toEqual(0);
@@ -73,20 +73,20 @@ describe("jasmineFixture", function(){
 
 	});
 
-	describe(".readFixture()", function(){
+	describe(".read()", function(){
 
 		beforeEach(function(){
 			spyOn(jQuery, "ajax").and.callThrough();
 		});
 
 		it("Returns the content of the given fixture", function(){
-			expect(jasmineFixture.readFixture("first.htm")).toEqual(firstText);
-			expect(jasmineFixture.readFixture("second.htm")).toEqual(secondText);
-			expect(jasmineFixture.readFixture("first.json")).toEqual(firstJson);
+			expect(jasmineFixture.read("first.htm")).toEqual(firstText);
+			expect(jasmineFixture.read("second.htm")).toEqual(secondText);
+			expect(jasmineFixture.read("first.json")).toEqual(firstJson);
 		});
 
 		it("Invokes jQuery.ajax to retrieve the fixture", function(){
-			jasmineFixture.readFixture("first.htm");
+			jasmineFixture.read("first.htm");
 			expect(jQuery.ajax).toHaveBeenCalled();
 		});
 
@@ -94,7 +94,7 @@ describe("jasmineFixture", function(){
 
 			var basePath = jasmineFixture.setup().basePath;
 
-			jasmineFixture.readFixture("first.htm");
+			jasmineFixture.read("first.htm");
 			expect(jQuery.ajax).toHaveBeenCalledWith({
 				url: basePath + "first.htm",
 				async: false,
@@ -104,32 +104,32 @@ describe("jasmineFixture", function(){
 			jasmineFixture.setup({basePath: "missingfolder/"});
 			// Due to changed basePath this now points to a 404
 			expect(function(){
-				jasmineFixture.readFixture("first.htm");
+				jasmineFixture.read("first.htm");
 			}).toThrow();
 		});
 
 		it("Only one XHR call is executed if the same fixture is read multiple times", function(){
-			jasmineFixture.readFixture("first.htm");
-			jasmineFixture.readFixture("first.htm");
+			jasmineFixture.read("first.htm");
+			jasmineFixture.read("first.htm");
 			expect(jQuery.ajax).toHaveBeenCalledTimes(1);
-			jasmineFixture.readFixture("second.htm");
+			jasmineFixture.read("second.htm");
 			expect(jQuery.ajax).toHaveBeenCalledTimes(2);
 		});
 
 		it("Throws an error if the XHR call fails", function(){
 			expect(function(){
-				jasmineFixture.readFixture("missing.htm");
+				jasmineFixture.read("missing.htm");
 			}).toThrow();
 		});
 
 		describe("Relies on jQuery.ajax to guess the appropriate MIME type:", function(){
 
 			it("HTML fixtures are returned as strings", function(){
-				expect(jQuery.type(jasmineFixture.readFixture("first.htm"))).toEqual("string");
+				expect(jQuery.type(jasmineFixture.read("first.htm"))).toEqual("string");
 			});
 
 			it("JSON fixtures are returned as objects", function(){
-				expect(jQuery.type(jasmineFixture.readFixture("first.json"))).toEqual("object");
+				expect(jQuery.type(jasmineFixture.read("first.json"))).toEqual("object");
 			});
 
 		});

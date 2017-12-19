@@ -39,7 +39,7 @@ if(typeof(window.jasmineFixture) === "undefined"){
 	 * @param {String} url
 	 * @return {String|Object}
 	 */
-	jasmineFixture.readFixture = function(url){
+	jasmineFixture.read = function(url){
 		var fullUrl = assembleUrl(url);
 		if(jQuery.type(jasmineFixture.cache[fullUrl]) === "undefined"){
 			readIntoCache(fullUrl);
@@ -48,8 +48,8 @@ if(typeof(window.jasmineFixture) === "undefined"){
 	};
 
 	/**
-	 * Change current configuration
-	 * @param {jasmineFixture.options} options
+	 * Change¨/retrieve current configuration
+	 * @param {jasmineFixture.options} [options
 	 * @return {jasmineFixture.options}
 	 */
 	jasmineFixture.setup = function(options){
