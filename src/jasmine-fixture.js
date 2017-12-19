@@ -49,7 +49,7 @@ if(typeof(window.jasmineFixture) === "undefined"){
 
 	/**
 	 * Change¨/retrieve current configuration
-	 * @param {jasmineFixture.options} [options
+	 * @param {jasmineFixture.options} [options]
 	 * @return {jasmineFixture.options}
 	 */
 	jasmineFixture.setup = function(options){
