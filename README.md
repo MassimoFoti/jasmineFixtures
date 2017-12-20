@@ -2,14 +2,32 @@
 
 A set of API for handling HTML, CSS, JSON, XML and plain text fixtures in your [Jasmine](http://jasmine.github.io/) specs
 
+Heavily inspired by [jasmine-jquery](https://github.com/velesin/jasmine-jquery) it provides a simple, lean alternative for a smaller set of features
+
 ## Installation
 
 Either:
 
-- Download _jasmine-fixture.js_ from [here](https://raw.github.com/MassimoFoti/jasmine-fixture/master/dist/jasmine-fixture.min.js) and include it in your Jasmine's test runner file. Remember to also include jQuery
+- Simply download _jasmine-fixture.min.js_ from [here](https://raw.github.com/MassimoFoti/jasmine-fixture/master/dist/jasmine-fixture.min.js) and include it in your Jasmine's test runner file. Remember to also include jQuery
 - Use Bower ```bower install jasmine-fixture```
 
 ## Fixtures
+
+Allows you to read content from the file system to be used by your tests:
+
+In _myfixture.txt_:
+
+```html
+Whatever here
+```
+
+Inside your test:
+
+```js
+var fixtureStr = jasmineFixture.read("myfixture.txt");
+runMyCodeHere();
+expect(myVar).toEqual(fixtureStr);
+```
 
 By default, fixtures are loaded from `fixtures/`.
 You can change configuration using: `jasmineFixture.setup({basePath: "newPath/"});`.
