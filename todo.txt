@@ -1,4 +1,5 @@
 - Update to jQuery 3
+- Add release notes
 
 Version 2.0
 
