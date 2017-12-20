@@ -44,9 +44,17 @@ if(typeof(window.jasmineFixture) === "undefined"){
 	/**
 	 * @param {String} path
 	 */
+	jasmineFixture.appendHTML = function(path){
+		jasmineFixture.preload(path);
+		appendToContainer(jasmineFixture.cache[assembleUrl(path)]);
+	};
+
+	/**
+	 * @param {String} path
+	 */
 	jasmineFixture.loadHTML = function(path){
 		jasmineFixture.preload(path);
-		loadContainer(jasmineFixture.cache[assembleUrl(path)]);
+		loadIntoContainer(jasmineFixture.cache[assembleUrl(path)]);
 	};
 
 	/**
@@ -87,12 +95,23 @@ if(typeof(window.jasmineFixture) === "undefined"){
 		return config;
 	};
 
-	var assembleUrl = function(url){
-		return config.basePath + url;
+	/**
+	 * @param {String} html
+	 */
+	var appendToContainer = function(html){
+		var container = getContainer();
+		container.append(html);
 	};
 
 	/**
-	 * @returns {JQuery<TElement extends Node>}
+	 * @param {String} path
+	 */
+	var assembleUrl = function(path){
+		return config.basePath + path;
+	};
+
+	/**
+	 * @return {jQuery}
 	 */
 	var getContainer = function(){
 		var currentContainer = jQuery("body").find("#" + config.containerId);
@@ -107,12 +126,18 @@ if(typeof(window.jasmineFixture) === "undefined"){
 		}
 	};
 
-	var loadContainer = function(html){
+	/**
+	 * @param {String} html
+	 */
+	var loadIntoContainer = function(html){
 		var container = getContainer();
 		container.empty();
 		container.append(html);
 	};
 
+	/**
+	 * @param {String} url
+	 */
 	var readIntoCache = function(url){
 		jQuery.ajax({
 			url: url,

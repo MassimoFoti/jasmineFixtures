@@ -1,5 +1,3 @@
-jasmineFixture.appendHTML()
-
 jasmineFixture.loadCSS()
 jasmineFixture.appendCSS()
 

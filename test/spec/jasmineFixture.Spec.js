@@ -69,6 +69,39 @@ describe("jasmineFixture", function(){
 
 	});
 
+	describe(".appendHTML()", function(){
+
+		describe("First:", function(){
+
+			it("Invokes .preload()", function(){
+				spyOn(jasmineFixture, "preload");
+				jasmineFixture.appendHTML("first.htm");
+				expect(jasmineFixture.preload).toHaveBeenCalledWith("first.htm");
+			});
+
+		});
+
+		describe("Then:", function(){
+
+			it("Append the content of the given fixture inside the container", function(){
+				jasmineFixture.appendHTML("first.htm");
+				expect(jQuery("body").find("#" + jasmineFixture.setup().containerId).html()).toEqual(firstHTML);
+			});
+
+		});
+
+		describe("If invoked more than once in a row:", function(){
+
+			it("The content is added to pre-existing fixture content, if any", function(){
+				jasmineFixture.appendHTML("first.htm");
+				jasmineFixture.appendHTML("second.htm");
+				expect(jQuery("body").find("#" + jasmineFixture.setup().containerId).html()).toEqual(firstHTML + secondHTML);
+			});
+
+		});
+
+	});
+
 	describe(".clearCache()", function(){
 
 		it("Flush/clear the cache", function(){
@@ -105,7 +138,7 @@ describe("jasmineFixture", function(){
 
 		describe("Then:", function(){
 
-			it("Inject the content of the given fixture inside the <body>", function(){
+			it("Inject the content of the given fixture inside the container", function(){
 				jasmineFixture.loadHTML("first.htm");
 				expect(jQuery("body").find("#" + jasmineFixture.setup().containerId).html()).toEqual(firstHTML);
 			});
