@@ -91,7 +91,6 @@ describe("jasmineFixture", function(){
 		});
 
 		it("The configured basePath is prepend to each XHR request", function(){
-
 			var basePath = jasmineFixture.setup().basePath;
 
 			jasmineFixture.read("first.htm");
@@ -133,7 +132,6 @@ describe("jasmineFixture", function(){
 			});
 
 		});
-
 
 	});
 
