@@ -73,27 +73,37 @@ describe("jasmineFixture", function(){
 
 	});
 
-	describe(".read()", function(){
+	describe(".preload()", function(){
 
 		beforeEach(function(){
 			spyOn(jQuery, "ajax").and.callThrough();
 		});
 
-		it("Returns the content of the given fixture", function(){
-			expect(jasmineFixture.read("first.htm")).toEqual(firstText);
-			expect(jasmineFixture.read("second.htm")).toEqual(secondText);
-			expect(jasmineFixture.read("person.json")).toEqual(firstJson);
+		it("Put the content of the given fixture inside .cache", function(){
+			var basePath = jasmineFixture.setup().basePath;
+			expect(jasmineFixture.cache[basePath + "first.htm"]).not.toBeDefined();
+			jasmineFixture.preload("first.htm");
+			expect(jasmineFixture.cache[basePath + "first.htm"]).toEqual(firstText);
+		});
+
+		it("Accepts either a single string or an array of strings as its only argument", function(){
+			var basePath = jasmineFixture.setup().basePath;
+			jasmineFixture.preload("first.htm");
+			jasmineFixture.preload(["first.htm", "second.htm", "person.json"]);
+			expect(jasmineFixture.cache[basePath + "first.htm"]).toBeDefined();
+			expect(jasmineFixture.cache[basePath + "second.htm"]).toBeDefined();
+			expect(jasmineFixture.cache[basePath + "person.json"]).toBeDefined();
 		});
 
 		it("Invokes jQuery.ajax to retrieve the fixture", function(){
-			jasmineFixture.read("first.htm");
+			jasmineFixture.preload("first.htm");
 			expect(jQuery.ajax).toHaveBeenCalled();
 		});
 
 		it("The configured basePath is prepend to each XHR request", function(){
 			var basePath = jasmineFixture.setup().basePath;
 
-			jasmineFixture.read("first.htm");
+			jasmineFixture.preload("first.htm");
 			expect(jQuery.ajax).toHaveBeenCalledWith({
 				url: basePath + "first.htm",
 				async: false,
@@ -108,10 +118,10 @@ describe("jasmineFixture", function(){
 		});
 
 		it("Only one XHR call is executed if the same fixture is read multiple times", function(){
-			jasmineFixture.read("first.htm");
-			jasmineFixture.read("first.htm");
+			jasmineFixture.preload("first.htm");
+			jasmineFixture.preload("first.htm");
 			expect(jQuery.ajax).toHaveBeenCalledTimes(1);
-			jasmineFixture.read("second.htm");
+			jasmineFixture.preload("second.htm");
 			expect(jQuery.ajax).toHaveBeenCalledTimes(2);
 		});
 
@@ -119,6 +129,33 @@ describe("jasmineFixture", function(){
 			expect(function(){
 				jasmineFixture.read("missing.htm");
 			}).toThrow();
+		});
+
+	});
+
+	describe(".read()", function(){
+
+		beforeEach(function(){
+			spyOn(jasmineFixture, "preload").and.callThrough();
+		});
+
+		describe("First:", function(){
+
+			it("Invokes .preload()", function(){
+				jasmineFixture.read("first.htm");
+				expect(jasmineFixture.preload).toHaveBeenCalledWith("first.htm");
+			});
+
+		});
+
+		describe("Then:", function(){
+
+			it("Returns the content of the given fixture", function(){
+				expect(jasmineFixture.read("first.htm")).toEqual(firstText);
+				expect(jasmineFixture.read("second.htm")).toEqual(secondText);
+				expect(jasmineFixture.read("person.json")).toEqual(firstJson);
+			});
+
 		});
 
 		describe("Relies on jQuery.ajax to guess the appropriate MIME type:", function(){

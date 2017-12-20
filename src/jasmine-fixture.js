@@ -36,15 +36,27 @@ if(typeof(window.jasmineFixture) === "undefined"){
 	};
 
 	/**
-	 * @param {String} url
+	 * @param {String|Array.<String>} path
+	 */
+	jasmineFixture.preload = function(path){
+		if(jQuery.type(path) === "string"){
+			path = [path];
+		}
+		path.forEach(function(element){
+			var fullUrl = assembleUrl(element);
+			if(jQuery.type(jasmineFixture.cache[fullUrl]) === "undefined"){
+				readIntoCache(fullUrl);
+			}
+		});
+	};
+
+	/**
+	 * @param {String} path
 	 * @return {String|Object}
 	 */
-	jasmineFixture.read = function(url){
-		var fullUrl = assembleUrl(url);
-		if(jQuery.type(jasmineFixture.cache[fullUrl]) === "undefined"){
-			readIntoCache(fullUrl);
-		}
-		return jasmineFixture.cache[fullUrl];
+	jasmineFixture.read = function(path){
+		jasmineFixture.preload(path);
+		return jasmineFixture.cache[assembleUrl(path)];
 	};
 
 	/**
@@ -55,7 +67,7 @@ if(typeof(window.jasmineFixture) === "undefined"){
 	jasmineFixture.setup = function(options){
 		jQuery.extend(config, options);
 		// Ensure we always have a trailing slash
-		if(config.basePath[config.basePath.length -1] !== "/") {
+		if(config.basePath[config.basePath.length - 1] !== "/"){
 			config.basePath += "/";
 		}
 		return config;
