@@ -60,7 +60,6 @@ describe("jasmineFixture", function(){
 
 		it("Each key map an url to its content", function(){
 			var basePath = jasmineFixture.setup().basePath;
-
 			jasmineFixture.read("first.htm");
 			expect(jasmineFixture.cache[basePath + "first.htm"]).toEqual(firstHTML);
 			jasmineFixture.read("second.htm");
