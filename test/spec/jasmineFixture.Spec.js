@@ -156,7 +156,7 @@ describe("jasmineFixture", function(){
 
 		});
 
-		describe("If a basepath is set without a trailing slash:", function(){
+		describe("If basePath is set without a trailing slash:", function(){
 
 			it("One is added automatically", function(){
 				expect(jasmineFixture.setup({basePath: "newPath"}).basePath).toEqual("newPath/");
