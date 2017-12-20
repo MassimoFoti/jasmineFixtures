@@ -123,12 +123,21 @@ describe("jasmineFixture", function(){
 
 		describe("Relies on jQuery.ajax to guess the appropriate MIME type:", function(){
 
-			it("HTML fixtures are returned as strings", function(){
+			it("CSS fixtures are returned as String", function(){
+				expect(jQuery.type(jasmineFixture.read("style.css"))).toEqual("string");
+			});
+
+			it("HTML fixtures are returned as String", function(){
 				expect(jQuery.type(jasmineFixture.read("first.htm"))).toEqual("string");
 			});
 
-			it("JSON fixtures are returned as objects", function(){
+			it("JSON fixtures are returned as Object", function(){
 				expect(jQuery.type(jasmineFixture.read("person.json"))).toEqual("object");
+			});
+
+			it("XML fixtures are returned as XMLDocument", function(){
+				// A bit of a dirty trick
+				expect(jasmineFixture.read("person.xml").toString()).toEqual("[object XMLDocument]");
 			});
 
 		});

@@ -23,8 +23,9 @@ module.exports = function(config) {
 			"test/spec/*.Spec.js",
 
 			// Fixtures
-			{pattern: "test/fixtures/**/*.json", watched: true, served: true, included: false},
+			{pattern: "test/fixtures/**/*.css", watched: true, served: true, included: false},
 			{pattern: "test/fixtures/**/*.htm", watched: true, served: true, included: false},
+			{pattern: "test/fixtures/**/*.json", watched: true, served: true, included: false},
 			{pattern: "test/fixtures/**/*.txt", watched: true, served: true, included: false},
 			{pattern: "test/fixtures/**/*.xml", watched: true, served: true, included: false}
 		],
