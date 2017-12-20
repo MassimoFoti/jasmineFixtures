@@ -29,7 +29,7 @@ if(typeof(window.jasmineFixture) === "undefined"){
 	};
 
 	/**
-	 * @type {Array.<jQuery>}
+	 * @type {Array.<JQuery>}
 	 */
 	var styleNodes = [];
 
@@ -150,7 +150,7 @@ if(typeof(window.jasmineFixture) === "undefined"){
 	};
 
 	/**
-	 * @return {jQuery}
+	 * @return {JQuery}
 	 */
 	var getContainer = function(){
 		var currentContainer = jQuery("body").find("#" + config.containerId);
