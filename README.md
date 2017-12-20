@@ -9,7 +9,7 @@ Heavily inspired by [jasmine-jquery](https://github.com/velesin/jasmine-jquery) 
 Either:
 
 - Simply download _jasmine-fixture.js_ from [here](https://raw.github.com/MassimoFoti/jasmine-fixture/master/dist/jasmine-fixture.min.js) and include it in your Jasmine's test runner file. Remember to also include jQuery
-- Use Bower ```bower install jasmine-fixture```
+- Use Bower ```bower install jasmineFixture```
 
 ## Fixtures
 
