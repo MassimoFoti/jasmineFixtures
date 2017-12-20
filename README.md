@@ -48,7 +48,7 @@ The following methods are provided:
   - XML fixtures are returned as XMLDocument
   
 - `jasmineFixture.preload(path[, path, ...])`
-  - Pre-loads fixture(s) from one or more files and stores them into cache, without returning them or appending them to the DOM. All subsequent calls will then get fixtures content from cache, without making any XHR calls (unless cache is manually purged by using `jasmineFixture.clearCache` method).
+  - Pre-loads fixture(s) from one or more files and stores them into cache, without returning them or appending them to the DOM. All subsequent calls will then get fixtures content from cache, without making any XHR calls (unless cache is manually purged by using `jasmineFixture.clearCache()` method).
   
 - `jasmineFixture.clearCache()`
   - Flush/clear the cache 
@@ -71,7 +71,7 @@ runMyCodeHere();
 expect($("#my-fixture")).to...
 ```
 
-The fixture will be loaded into the `<div id="jasmine-fixtures"></div>` container that is automatically added to the DOM (you can change configuration using: `jasmineFixture.setup({containerId: "newId"});`). The fixtures container is automatically cleaned-up between tests, so you don't have to worry about left-overs from fixtures loaded in preceeding test.
+The fixture will be loaded into the `<div id="jasmine-fixtures"></div>` container that is automatically added to the DOM (you can change the configured id using: `jasmineFixture.setup({containerId: "newId"});`). The fixtures container is automatically cleaned-up between tests, so you don't have to worry about left-overs from fixtures loaded in preceeding test.
 
 The following methods are provided:
 
