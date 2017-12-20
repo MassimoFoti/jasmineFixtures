@@ -1,3 +1,6 @@
-Create and register Bower package
+- Update to jQuery 3
 
-Write docs
+Version 2.0
+
+- Drop support for IE 9/10
+- Use const/let

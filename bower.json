@@ -1,0 +1,35 @@
+{
+  "name": "jasmine-fixture",
+  "description": "A set of API for handling HTML, CSS, JSON, XML and plain text fixtures in Jasmine specs",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/MassimoFoti/jasmine-fixture",
+  "authors": [
+    "Massimo Foti <massimo@massimocorner.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/MassimoFoti/jasmine-fixture"
+  },
+  "main": [
+    "dist/jasmine-fixture.js",
+    "dist/jasmine-fixture.css"
+  ],
+  "dependencies": {
+    "jasmine": ">=2",
+    "jquery": ">=2"
+  },
+  "keywords": [
+    "jasmine"
+  ],
+  "ignore": [
+    "**/.*",
+    "gulpfile.js",
+    "todo.txt",
+    ".idea",
+    "archive",
+    "lib",
+    "node_modules",
+    "src",
+    "test"
+  ]
+}
