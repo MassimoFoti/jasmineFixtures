@@ -172,6 +172,10 @@ describe("jasmineFixture", function(){
 				expect(jQuery.type(jasmineFixture.read("person.json"))).toEqual("object");
 			});
 
+			it("Plain text fixtures are returned as String", function(){
+				expect(jQuery.type(jasmineFixture.read("text.txt"))).toEqual("string");
+			});
+
 			it("XML fixtures are returned as XMLDocument", function(){
 				// A bit of a dirty trick
 				expect(jasmineFixture.read("person.xml").toString()).toEqual("[object XMLDocument]");
