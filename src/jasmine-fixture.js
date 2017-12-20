@@ -29,6 +29,11 @@ if(typeof(window.jasmineFixture) === "undefined"){
 	};
 
 	/**
+	 * @type {Array.<jQuery>}
+	 */
+	var styleNodes = [];
+
+	/**
 	 * @type {Object.<String, String>}
 	 */
 	jasmineFixture.cache = {};
@@ -37,8 +42,22 @@ if(typeof(window.jasmineFixture) === "undefined"){
 		jasmineFixture.cache = {};
 	};
 
-	jasmineFixture.clearContainer = function(){
+	jasmineFixture.clearCSS = function(){
+		styleNodes.forEach(function(element){
+			element.remove();
+		});
+	};
+
+	jasmineFixture.clearHTML = function(){
 		getContainer().remove();
+	};
+
+	/**
+	 * @param {String} path
+	 */
+	jasmineFixture.appendCSS = function(path){
+		jasmineFixture.preload(path);
+		appendStyle(jasmineFixture.cache[assembleUrl(path)]);
 	};
 
 	/**
@@ -47,6 +66,15 @@ if(typeof(window.jasmineFixture) === "undefined"){
 	jasmineFixture.appendHTML = function(path){
 		jasmineFixture.preload(path);
 		appendToContainer(jasmineFixture.cache[assembleUrl(path)]);
+	};
+
+	/**
+	 * @param {String} path
+	 */
+	jasmineFixture.loadCSS = function(path){
+		jasmineFixture.preload(path);
+		jasmineFixture.clearCSS();
+		appendStyle(jasmineFixture.cache[assembleUrl(path)]);
 	};
 
 	/**
@@ -96,6 +124,16 @@ if(typeof(window.jasmineFixture) === "undefined"){
 	};
 
 	/**
+	 * @param {String} css
+	 */
+	var appendStyle = function(css){
+		var cssNode = jQuery("<style>");
+		cssNode.text(css);
+		styleNodes.push(cssNode);
+		jQuery("head").append(cssNode);
+	};
+
+	/**
 	 * @param {String} html
 	 */
 	var appendToContainer = function(html){
@@ -105,6 +143,7 @@ if(typeof(window.jasmineFixture) === "undefined"){
 
 	/**
 	 * @param {String} path
+	 * @return {String}
 	 */
 	var assembleUrl = function(path){
 		return config.basePath + path;
@@ -154,5 +193,6 @@ if(typeof(window.jasmineFixture) === "undefined"){
 
 afterEach(function(){
 	"use strict";
-	jasmineFixture.clearContainer();
+	jasmineFixture.clearCSS();
+	jasmineFixture.clearHTML();
 });
