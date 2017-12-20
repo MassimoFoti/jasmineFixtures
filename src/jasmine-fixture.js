@@ -12,6 +12,7 @@ if(typeof(window.jasmineFixture) === "undefined"){
  * @typedef {Object} jasmineFixture.options
  *
  * @property {String} basePath        Base path for fixtures. Default to "fixtures/"
+ * @property {String} containerId     Used as id attribute for the <div> where fixtures are loaded. Default to "jasmine-fixtures"
  */
 
 (function(){
@@ -23,7 +24,8 @@ if(typeof(window.jasmineFixture) === "undefined"){
 	 * @type {jasmineFixture.options}
 	 */
 	var config = {
-		basePath: "fixtures/"
+		basePath: "fixtures/",
+		containerId: "jasmine-fixtures"
 	};
 
 	/**

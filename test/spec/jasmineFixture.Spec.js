@@ -194,12 +194,21 @@ describe("jasmineFixture", function(){
 				expect(config.basePath).toBeDefined();
 			});
 
+			it("containerId", function(){
+				var config = jasmineFixture.setup();
+				expect(config.containerId).toBeDefined();
+			});
+
 		});
 
 		describe("If a set of name/value pairs is passed as argument. Set the following configuration options:", function(){
 
 			it("basePath", function(){
 				expect(jasmineFixture.setup({basePath: "newPath/"}).basePath).toEqual("newPath/");
+			});
+
+			it("containerId", function(){
+				expect(jasmineFixture.setup({containerId: "newId"}).containerId).toEqual("newId");
 			});
 
 		});
