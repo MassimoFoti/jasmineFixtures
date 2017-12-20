@@ -57,7 +57,7 @@ if(typeof(window.jasmineFixture) === "undefined"){
 	 */
 	jasmineFixture.appendCSS = function(path){
 		jasmineFixture.preload(path);
-		appendStyle(jasmineFixture.cache[assembleUrl(path)]);
+		appendStyle(readFromCache(path));
 	};
 
 	/**
@@ -65,7 +65,7 @@ if(typeof(window.jasmineFixture) === "undefined"){
 	 */
 	jasmineFixture.appendHTML = function(path){
 		jasmineFixture.preload(path);
-		appendToContainer(jasmineFixture.cache[assembleUrl(path)]);
+		appendToContainer(readFromCache(path));
 	};
 
 	/**
@@ -74,7 +74,7 @@ if(typeof(window.jasmineFixture) === "undefined"){
 	jasmineFixture.loadCSS = function(path){
 		jasmineFixture.preload(path);
 		jasmineFixture.clearCSS();
-		appendStyle(jasmineFixture.cache[assembleUrl(path)]);
+		appendStyle(readFromCache(path));
 	};
 
 	/**
@@ -82,7 +82,7 @@ if(typeof(window.jasmineFixture) === "undefined"){
 	 */
 	jasmineFixture.loadHTML = function(path){
 		jasmineFixture.preload(path);
-		loadIntoContainer(jasmineFixture.cache[assembleUrl(path)]);
+		loadIntoContainer(readFromCache(path));
 	};
 
 	/**
@@ -106,7 +106,7 @@ if(typeof(window.jasmineFixture) === "undefined"){
 	 */
 	jasmineFixture.read = function(path){
 		jasmineFixture.preload(path);
-		return jasmineFixture.cache[assembleUrl(path)];
+		return readFromCache(path);
 	};
 
 	/**
@@ -172,6 +172,14 @@ if(typeof(window.jasmineFixture) === "undefined"){
 		var container = getContainer();
 		container.empty();
 		container.append(html);
+	};
+
+	/**
+	 * @param {String} path
+	 * @return {String|Object}
+	 */
+	var readFromCache = function(path) {
+		return jasmineFixture.cache[assembleUrl(path)];
 	};
 
 	/**
