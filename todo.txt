@@ -7,3 +7,5 @@ jasmineFixture.loadCSS()
 jasmineFixture.appendCSS()
 
 Create and register Bower package
+
+Write docs
