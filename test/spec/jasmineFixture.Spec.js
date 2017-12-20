@@ -82,7 +82,7 @@ describe("jasmineFixture", function(){
 		it("Returns the content of the given fixture", function(){
 			expect(jasmineFixture.read("first.htm")).toEqual(firstText);
 			expect(jasmineFixture.read("second.htm")).toEqual(secondText);
-			expect(jasmineFixture.read("first.json")).toEqual(firstJson);
+			expect(jasmineFixture.read("person.json")).toEqual(firstJson);
 		});
 
 		it("Invokes jQuery.ajax to retrieve the fixture", function(){
@@ -128,7 +128,7 @@ describe("jasmineFixture", function(){
 			});
 
 			it("JSON fixtures are returned as objects", function(){
-				expect(jQuery.type(jasmineFixture.read("first.json"))).toEqual("object");
+				expect(jQuery.type(jasmineFixture.read("person.json"))).toEqual("object");
 			});
 
 		});
