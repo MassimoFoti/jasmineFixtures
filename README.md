@@ -72,10 +72,10 @@ The fixture will be loaded into the `<head></head>`
 The following methods are provided:
 
 - `jasmineFixture.appendCSS(path)`
-  - Append the content of the given fixture inside the <head>. Already existing content, if any, is left untouched
+  - Append the content of the given fixture inside the `<head>`. Already existing content, if any, is left untouched
   
 - `jasmineFixture.loadCSS(path)`
-  - Load the content of the given fixture inside the <head>. Already existing content, if any, is removed
+  - Load the content of the given fixture inside the `<head>`. Already existing content, if any, is removed
 
 ## Mocking with jasmine-ajax
 
