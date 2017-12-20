@@ -37,6 +37,18 @@ if(typeof(window.jasmineFixture) === "undefined"){
 		jasmineFixture.cache = {};
 	};
 
+	jasmineFixture.clearContainer = function(){
+		getContainer().remove();
+	};
+
+	/**
+	 * @param {String} path
+	 */
+	jasmineFixture.loadHTML = function(path){
+		jasmineFixture.preload(path);
+		loadContainer(jasmineFixture.cache[assembleUrl(path)]);
+	};
+
 	/**
 	 * @param {String|Array.<String>} path
 	 */
@@ -79,6 +91,28 @@ if(typeof(window.jasmineFixture) === "undefined"){
 		return config.basePath + url;
 	};
 
+	/**
+	 * @returns {JQuery<TElement extends Node>}
+	 */
+	var getContainer = function(){
+		var currentContainer = jQuery("body").find("#" + config.containerId);
+		if(currentContainer.length !== 0){
+			return currentContainer;
+		}
+		else{
+			var container = jQuery("<div>");
+			container.attr("id", config.containerId);
+			jQuery("body").append(container);
+			return container;
+		}
+	};
+
+	var loadContainer = function(html){
+		var container = getContainer();
+		container.empty();
+		container.append(html);
+	};
+
 	var readIntoCache = function(url){
 		jQuery.ajax({
 			url: url,
@@ -92,3 +126,8 @@ if(typeof(window.jasmineFixture) === "undefined"){
 	};
 
 }());
+
+afterEach(function(){
+	"use strict";
+	jasmineFixture.clearContainer();
+});
