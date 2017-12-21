@@ -11,7 +11,7 @@
     "url": "git://github.com/MassimoFoti/jasmineFixtures"
   },
   "main": [
-    "dist/jasmineFixtures.min.js"
+    "dist/jasmineFixtures.js"
   ],
   "dependencies": {
     "jasmine": ">=2",
