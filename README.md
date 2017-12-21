@@ -1,4 +1,4 @@
-# jasmine-fixture
+# jasmineFixtures
 
 A set of API for handling HTML, CSS, JSON, XML and plain text fixtures in your [Jasmine](http://jasmine.github.io/) specs
 
