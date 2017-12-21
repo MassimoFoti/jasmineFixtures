@@ -21,7 +21,7 @@ var CONST = {
 	SRC_FOLDER: "src",
 	DIST_FOLDER: "dist",
 	MIN_SUFFIX: ".min.js",
-	JS_SRC: "src/jasmine-fixture.js",
+	JS_SRC: "src/jasmineFixtures.js",
 	FOLDERS_TO_ARCHIVE: ["LICENSE", "dist/**/*", "lib/**/*", "src/**/*", "test/**/*"],
 	ARCHIVE_FILE: "jasmine-fixture.zip",
 	ARCHIVE_FOLDER: "archive",

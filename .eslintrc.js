@@ -16,7 +16,7 @@ module.exports = {
 	// Globals
 	globals: {
 		// Libs
-		"jasmineFixture": false
+		"jasmineFixtures": false
 	},
 
 	parserOptions: {

@@ -4,12 +4,12 @@ if(typeof(jQuery) === "undefined"){
 }
 
 /* istanbul ignore else */
-if(typeof(window.jasmineFixture) === "undefined"){
-	window.jasmineFixture = {};
+if(typeof(window.jasmineFixtures) === "undefined"){
+	window.jasmineFixtures = {};
 }
 
 /**
- * @typedef {Object} jasmineFixture.options
+ * @typedef {Object} jasmineFixtures.options
  *
  * @property {String} basePath        Base path for fixtures. Default to "fixtures/"
  * @property {String} containerId     Used as id attribute for the <div> where fixtures are loaded. Default to "jasmine-fixtures"
@@ -18,10 +18,10 @@ if(typeof(window.jasmineFixture) === "undefined"){
 (function(){
 	"use strict";
 
-	jasmineFixture.version = "0.1";
+	jasmineFixtures.version = "0.2";
 
 	/**
-	 * @type {jasmineFixture.options}
+	 * @type {jasmineFixtures.options}
 	 */
 	var config = {
 		basePath: "fixtures/",
@@ -36,65 +36,65 @@ if(typeof(window.jasmineFixture) === "undefined"){
 	/**
 	 * @type {Object.<String, String>}
 	 */
-	jasmineFixture.cache = {};
+	jasmineFixtures.cache = {};
 
-	jasmineFixture.clearCache = function(){
-		jasmineFixture.cache = {};
+	jasmineFixtures.clearCache = function(){
+		jasmineFixtures.cache = {};
 	};
 
-	jasmineFixture.clearCSS = function(){
+	jasmineFixtures.clearCSS = function(){
 		styleNodes.forEach(function(element){
 			element.remove();
 		});
 	};
 
-	jasmineFixture.clearHTML = function(){
+	jasmineFixtures.clearHTML = function(){
 		getContainer().remove();
 	};
 
 	/**
 	 * @param {String} path
 	 */
-	jasmineFixture.appendCSS = function(path){
-		jasmineFixture.preload(path);
+	jasmineFixtures.appendCSS = function(path){
+		jasmineFixtures.preload(path);
 		appendStyle(readFromCache(path));
 	};
 
 	/**
 	 * @param {String} path
 	 */
-	jasmineFixture.appendHTML = function(path){
-		jasmineFixture.preload(path);
+	jasmineFixtures.appendHTML = function(path){
+		jasmineFixtures.preload(path);
 		appendToContainer(readFromCache(path));
 	};
 
 	/**
 	 * @param {String} path
 	 */
-	jasmineFixture.loadCSS = function(path){
-		jasmineFixture.preload(path);
-		jasmineFixture.clearCSS();
+	jasmineFixtures.loadCSS = function(path){
+		jasmineFixtures.preload(path);
+		jasmineFixtures.clearCSS();
 		appendStyle(readFromCache(path));
 	};
 
 	/**
 	 * @param {String} path
 	 */
-	jasmineFixture.loadHTML = function(path){
-		jasmineFixture.preload(path);
+	jasmineFixtures.loadHTML = function(path){
+		jasmineFixtures.preload(path);
 		loadIntoContainer(readFromCache(path));
 	};
 
 	/**
 	 * @param {String|Array.<String>} path
 	 */
-	jasmineFixture.preload = function(path){
+	jasmineFixtures.preload = function(path){
 		if(jQuery.type(path) === "string"){
 			path = [path];
 		}
 		path.forEach(function(element){
 			var fullUrl = assembleUrl(element);
-			if(jQuery.type(jasmineFixture.cache[fullUrl]) === "undefined"){
+			if(jQuery.type(jasmineFixtures.cache[fullUrl]) === "undefined"){
 				readIntoCache(fullUrl);
 			}
 		});
@@ -104,17 +104,17 @@ if(typeof(window.jasmineFixture) === "undefined"){
 	 * @param {String} path
 	 * @return {String|Object}
 	 */
-	jasmineFixture.read = function(path){
-		jasmineFixture.preload(path);
+	jasmineFixtures.read = function(path){
+		jasmineFixtures.preload(path);
 		return readFromCache(path);
 	};
 
 	/**
 	 * Change¨/retrieve current configuration
-	 * @param {jasmineFixture.options} [options]
-	 * @return {jasmineFixture.options}
+	 * @param {jasmineFixtures.options} [options]
+	 * @return {jasmineFixtures.options}
 	 */
-	jasmineFixture.setup = function(options){
+	jasmineFixtures.setup = function(options){
 		jQuery.extend(config, options);
 		// Ensure we always have a trailing slash
 		if(config.basePath[config.basePath.length - 1] !== "/"){
@@ -179,7 +179,7 @@ if(typeof(window.jasmineFixture) === "undefined"){
 	 * @return {String|Object}
 	 */
 	var readFromCache = function(path) {
-		return jasmineFixture.cache[assembleUrl(path)];
+		return jasmineFixtures.cache[assembleUrl(path)];
 	};
 
 	/**
@@ -191,7 +191,7 @@ if(typeof(window.jasmineFixture) === "undefined"){
 			async: false, // Must be synchronous to ensure fixtures are loaded before test run
 			cache: false
 		}).done(function(data){
-			jasmineFixture.cache[url] = data;
+			jasmineFixtures.cache[url] = data;
 		}).fail(function(jqXHR){
 			throw ("Failed to retrieve fixture at: " + url + " (status: " + jqXHR.status + ")");
 		});
@@ -201,6 +201,6 @@ if(typeof(window.jasmineFixture) === "undefined"){
 
 afterEach(function(){
 	"use strict";
-	jasmineFixture.clearCSS();
-	jasmineFixture.clearHTML();
+	jasmineFixtures.clearCSS();
+	jasmineFixtures.clearHTML();
 });

@@ -1,4 +1,4 @@
-describe("jasmineFixture", function(){
+describe("jasmineFixtures", function(){
 
 	"use strict";
 
@@ -10,15 +10,15 @@ describe("jasmineFixture", function(){
 			"firstName": "ciccio",
 			"lastName": "pasticcio"
 		};
-		jasmineFixture.setup({
+		jasmineFixtures.setup({
 			basePath: FIXTURES_BASE_PATH,
 			containerId: "jasmine-fixtures"
 		});
 	});
 
 	afterEach(function(){
-		jasmineFixture.clearCache();
-		jasmineFixture.setup({
+		jasmineFixtures.clearCache();
+		jasmineFixtures.setup({
 			basePath: FIXTURES_BASE_PATH,
 			containerId: "jasmine-fixtures"
 		});
@@ -30,13 +30,13 @@ describe("jasmineFixture", function(){
 	});
 
 	it("Lives inside its own namespace", function(){
-		expect(jasmineFixture).toBeDefined();
+		expect(jasmineFixtures).toBeDefined();
 	});
 
 	describe(".version", function(){
 
 		it("Reports the current version number", function(){
-			expect(jasmineFixture.version).toBeDefined();
+			expect(jasmineFixtures.version).toBeDefined();
 		});
 
 	});
@@ -44,26 +44,26 @@ describe("jasmineFixture", function(){
 	describe(".cache", function(){
 
 		it("Is a plain object", function(){
-			expect(jQuery.isPlainObject(jasmineFixture.cache)).toEqual(true);
+			expect(jQuery.isPlainObject(jasmineFixtures.cache)).toEqual(true);
 		});
 
 		it("Contains no keys out of the box", function(){
-			expect(Object.keys(jasmineFixture.cache).length).toEqual(0);
+			expect(Object.keys(jasmineFixtures.cache).length).toEqual(0);
 		});
 
 		it("Contains one key for each retrieved fixture", function(){
-			jasmineFixture.read("first.htm");
-			expect(Object.keys(jasmineFixture.cache).length).toEqual(1);
-			jasmineFixture.read("second.htm");
-			expect(Object.keys(jasmineFixture.cache).length).toEqual(2);
+			jasmineFixtures.read("first.htm");
+			expect(Object.keys(jasmineFixtures.cache).length).toEqual(1);
+			jasmineFixtures.read("second.htm");
+			expect(Object.keys(jasmineFixtures.cache).length).toEqual(2);
 		});
 
 		it("Each key map an url to its content", function(){
-			var basePath = jasmineFixture.setup().basePath;
-			jasmineFixture.read("first.htm");
-			expect(jasmineFixture.cache[basePath + "first.htm"]).toEqual(firstHTML);
-			jasmineFixture.read("second.htm");
-			expect(jasmineFixture.cache[basePath + "second.htm"]).toEqual(secondHTML);
+			var basePath = jasmineFixtures.setup().basePath;
+			jasmineFixtures.read("first.htm");
+			expect(jasmineFixtures.cache[basePath + "first.htm"]).toEqual(firstHTML);
+			jasmineFixtures.read("second.htm");
+			expect(jasmineFixtures.cache[basePath + "second.htm"]).toEqual(secondHTML);
 		});
 
 	});
@@ -73,9 +73,9 @@ describe("jasmineFixture", function(){
 		describe("First:", function(){
 
 			it("Invokes .preload()", function(){
-				spyOn(jasmineFixture, "preload");
-				jasmineFixture.appendCSS("style.css");
-				expect(jasmineFixture.preload).toHaveBeenCalledWith("style.css");
+				spyOn(jasmineFixtures, "preload");
+				jasmineFixtures.appendCSS("style.css");
+				expect(jasmineFixtures.preload).toHaveBeenCalledWith("style.css");
 			});
 
 		});
@@ -84,9 +84,9 @@ describe("jasmineFixture", function(){
 
 			it("Inject the content of the given fixture inside a <style> tag located inside the <head>", function(){
 				expect(jQuery("head style").length).toEqual(0);
-				jasmineFixture.appendCSS("style.css");
+				jasmineFixtures.appendCSS("style.css");
 				expect(jQuery("head style").length).toEqual(1);
-				expect(jQuery("head style").text()).toEqual(jasmineFixture.read("style.css"));
+				expect(jQuery("head style").text()).toEqual(jasmineFixtures.read("style.css"));
 			});
 
 		});
@@ -94,11 +94,11 @@ describe("jasmineFixture", function(){
 		describe("If invoked more than once in a row:", function(){
 
 			it("The content is added to pre-existing fixture content, if any", function(){
-				jasmineFixture.appendCSS("style.css");
-				jasmineFixture.appendCSS("more.css");
+				jasmineFixtures.appendCSS("style.css");
+				jasmineFixtures.appendCSS("more.css");
 				expect(jQuery("head style").length).toEqual(2);
-				expect(jQuery(jQuery("head style")[0]).text()).toEqual(jasmineFixture.read("style.css"));
-				expect(jQuery(jQuery("head style")[1]).text()).toEqual(jasmineFixture.read("more.css"));
+				expect(jQuery(jQuery("head style")[0]).text()).toEqual(jasmineFixtures.read("style.css"));
+				expect(jQuery(jQuery("head style")[1]).text()).toEqual(jasmineFixtures.read("more.css"));
 			});
 
 		});
@@ -110,9 +110,9 @@ describe("jasmineFixture", function(){
 		describe("First:", function(){
 
 			it("Invokes .preload()", function(){
-				spyOn(jasmineFixture, "preload");
-				jasmineFixture.appendHTML("first.htm");
-				expect(jasmineFixture.preload).toHaveBeenCalledWith("first.htm");
+				spyOn(jasmineFixtures, "preload");
+				jasmineFixtures.appendHTML("first.htm");
+				expect(jasmineFixtures.preload).toHaveBeenCalledWith("first.htm");
 			});
 
 		});
@@ -120,8 +120,8 @@ describe("jasmineFixture", function(){
 		describe("Then:", function(){
 
 			it("Append the content of the given fixture inside the container", function(){
-				jasmineFixture.appendHTML("first.htm");
-				expect(jQuery("body").find("#" + jasmineFixture.setup().containerId).html()).toEqual(firstHTML);
+				jasmineFixtures.appendHTML("first.htm");
+				expect(jQuery("body").find("#" + jasmineFixtures.setup().containerId).html()).toEqual(firstHTML);
 			});
 
 		});
@@ -129,9 +129,9 @@ describe("jasmineFixture", function(){
 		describe("If invoked more than once in a row:", function(){
 
 			it("The content is added to pre-existing fixture content, if any", function(){
-				jasmineFixture.appendHTML("first.htm");
-				jasmineFixture.appendHTML("second.htm");
-				expect(jQuery("body").find("#" + jasmineFixture.setup().containerId).html()).toEqual(firstHTML + secondHTML);
+				jasmineFixtures.appendHTML("first.htm");
+				jasmineFixtures.appendHTML("second.htm");
+				expect(jQuery("body").find("#" + jasmineFixtures.setup().containerId).html()).toEqual(firstHTML + secondHTML);
 			});
 
 		});
@@ -141,10 +141,10 @@ describe("jasmineFixture", function(){
 	describe(".clearCache()", function(){
 
 		it("Flush/clear the cache", function(){
-			jasmineFixture.read("first.htm");
-			expect(Object.keys(jasmineFixture.cache).length).toEqual(1);
-			jasmineFixture.clearCache();
-			expect(Object.keys(jasmineFixture.cache).length).toEqual(0);
+			jasmineFixtures.read("first.htm");
+			expect(Object.keys(jasmineFixtures.cache).length).toEqual(1);
+			jasmineFixtures.clearCache();
+			expect(Object.keys(jasmineFixtures.cache).length).toEqual(0);
 		});
 
 	});
@@ -152,10 +152,10 @@ describe("jasmineFixture", function(){
 	describe(".clearHTML()", function(){
 
 		it("Remove the container from the <body>", function(){
-			jasmineFixture.loadHTML("first.htm");
-			expect(jQuery("body").find("#" + jasmineFixture.setup().containerId).length).toEqual(1);
-			jasmineFixture.clearHTML();
-			expect(jQuery("body").find("#" + jasmineFixture.setup().containerId).length).toEqual(0);
+			jasmineFixtures.loadHTML("first.htm");
+			expect(jQuery("body").find("#" + jasmineFixtures.setup().containerId).length).toEqual(1);
+			jasmineFixtures.clearHTML();
+			expect(jQuery("body").find("#" + jasmineFixtures.setup().containerId).length).toEqual(0);
 		});
 
 	});
@@ -165,9 +165,9 @@ describe("jasmineFixture", function(){
 		describe("First:", function(){
 
 			it("Invokes .preload()", function(){
-				spyOn(jasmineFixture, "preload");
-				jasmineFixture.loadCSS("style.css");
-				expect(jasmineFixture.preload).toHaveBeenCalledWith("style.css");
+				spyOn(jasmineFixtures, "preload");
+				jasmineFixtures.loadCSS("style.css");
+				expect(jasmineFixtures.preload).toHaveBeenCalledWith("style.css");
 			});
 
 		});
@@ -176,9 +176,9 @@ describe("jasmineFixture", function(){
 
 			it("Inject the content of the given fixture inside a <style> tag located inside the <head>", function(){
 				expect(jQuery("head style").length).toEqual(0);
-				jasmineFixture.loadCSS("style.css");
+				jasmineFixtures.loadCSS("style.css");
 				expect(jQuery("head style").length).toEqual(1);
-				expect(jQuery("head style").text()).toEqual(jasmineFixture.read("style.css"));
+				expect(jQuery("head style").text()).toEqual(jasmineFixtures.read("style.css"));
 			});
 
 		});
@@ -186,10 +186,10 @@ describe("jasmineFixture", function(){
 		describe("If invoked more than once in a row:", function(){
 
 			it("Will remove previously loaded fixtures, if any", function(){
-				jasmineFixture.loadCSS("style.css");
-				jasmineFixture.loadCSS("more.css");
+				jasmineFixtures.loadCSS("style.css");
+				jasmineFixtures.loadCSS("more.css");
 				expect(jQuery("head style").length).toEqual(1);
-				expect(jQuery("head style").text()).toEqual(jasmineFixture.read("more.css"));
+				expect(jQuery("head style").text()).toEqual(jasmineFixtures.read("more.css"));
 			});
 
 		});
@@ -201,9 +201,9 @@ describe("jasmineFixture", function(){
 		describe("First:", function(){
 
 			it("Invokes .preload()", function(){
-				spyOn(jasmineFixture, "preload");
-				jasmineFixture.loadHTML("first.htm");
-				expect(jasmineFixture.preload).toHaveBeenCalledWith("first.htm");
+				spyOn(jasmineFixtures, "preload");
+				jasmineFixtures.loadHTML("first.htm");
+				expect(jasmineFixtures.preload).toHaveBeenCalledWith("first.htm");
 			});
 
 		});
@@ -211,8 +211,8 @@ describe("jasmineFixture", function(){
 		describe("Then:", function(){
 
 			it("Inject the content of the given fixture inside the container", function(){
-				jasmineFixture.loadHTML("first.htm");
-				expect(jQuery("body").find("#" + jasmineFixture.setup().containerId).html()).toEqual(firstHTML);
+				jasmineFixtures.loadHTML("first.htm");
+				expect(jQuery("body").find("#" + jasmineFixtures.setup().containerId).html()).toEqual(firstHTML);
 			});
 
 		});
@@ -220,9 +220,9 @@ describe("jasmineFixture", function(){
 		describe("If invoked more than once in a row:", function(){
 
 			it("Will remove previously loaded fixtures, if any", function(){
-				jasmineFixture.loadHTML("first.htm");
-				jasmineFixture.loadHTML("second.htm");
-				expect(jQuery("body").find("#" + jasmineFixture.setup().containerId).html()).toEqual(secondHTML);
+				jasmineFixtures.loadHTML("first.htm");
+				jasmineFixtures.loadHTML("second.htm");
+				expect(jQuery("body").find("#" + jasmineFixtures.setup().containerId).html()).toEqual(secondHTML);
 			});
 
 		});
@@ -236,54 +236,54 @@ describe("jasmineFixture", function(){
 		});
 
 		it("Put the content of the given fixture inside .cache", function(){
-			var basePath = jasmineFixture.setup().basePath;
-			expect(jasmineFixture.cache[basePath + "first.htm"]).not.toBeDefined();
-			jasmineFixture.preload("first.htm");
-			expect(jasmineFixture.cache[basePath + "first.htm"]).toEqual(firstHTML);
+			var basePath = jasmineFixtures.setup().basePath;
+			expect(jasmineFixtures.cache[basePath + "first.htm"]).not.toBeDefined();
+			jasmineFixtures.preload("first.htm");
+			expect(jasmineFixtures.cache[basePath + "first.htm"]).toEqual(firstHTML);
 		});
 
 		it("Accepts either a single string or an array of strings as its only argument", function(){
-			var basePath = jasmineFixture.setup().basePath;
-			jasmineFixture.preload("first.htm");
-			jasmineFixture.preload(["first.htm", "second.htm", "person.json"]);
-			expect(jasmineFixture.cache[basePath + "first.htm"]).toBeDefined();
-			expect(jasmineFixture.cache[basePath + "second.htm"]).toBeDefined();
-			expect(jasmineFixture.cache[basePath + "person.json"]).toBeDefined();
+			var basePath = jasmineFixtures.setup().basePath;
+			jasmineFixtures.preload("first.htm");
+			jasmineFixtures.preload(["first.htm", "second.htm", "person.json"]);
+			expect(jasmineFixtures.cache[basePath + "first.htm"]).toBeDefined();
+			expect(jasmineFixtures.cache[basePath + "second.htm"]).toBeDefined();
+			expect(jasmineFixtures.cache[basePath + "person.json"]).toBeDefined();
 		});
 
 		it("Invokes jQuery.ajax to retrieve the fixture", function(){
-			jasmineFixture.preload("first.htm");
+			jasmineFixtures.preload("first.htm");
 			expect(jQuery.ajax).toHaveBeenCalled();
 		});
 
 		it("The configured basePath is prepend to each XHR request", function(){
-			var basePath = jasmineFixture.setup().basePath;
+			var basePath = jasmineFixtures.setup().basePath;
 
-			jasmineFixture.preload("first.htm");
+			jasmineFixtures.preload("first.htm");
 			expect(jQuery.ajax).toHaveBeenCalledWith({
 				url: basePath + "first.htm",
 				async: false,
 				cache: false
 			});
 
-			jasmineFixture.setup({basePath: "missingfolder/"});
+			jasmineFixtures.setup({basePath: "missingfolder/"});
 			// Due to changed basePath this now points to a 404
 			expect(function(){
-				jasmineFixture.read("first.htm");
+				jasmineFixtures.read("first.htm");
 			}).toThrow();
 		});
 
 		it("Only one XHR call is executed if the same fixture is read multiple times", function(){
-			jasmineFixture.preload("first.htm");
-			jasmineFixture.preload("first.htm");
+			jasmineFixtures.preload("first.htm");
+			jasmineFixtures.preload("first.htm");
 			expect(jQuery.ajax).toHaveBeenCalledTimes(1);
-			jasmineFixture.preload("second.htm");
+			jasmineFixtures.preload("second.htm");
 			expect(jQuery.ajax).toHaveBeenCalledTimes(2);
 		});
 
 		it("Throws an error if the XHR call fails", function(){
 			expect(function(){
-				jasmineFixture.read("missing.htm");
+				jasmineFixtures.read("missing.htm");
 			}).toThrow();
 		});
 
@@ -292,14 +292,14 @@ describe("jasmineFixture", function(){
 	describe(".read()", function(){
 
 		beforeEach(function(){
-			spyOn(jasmineFixture, "preload").and.callThrough();
+			spyOn(jasmineFixtures, "preload").and.callThrough();
 		});
 
 		describe("First:", function(){
 
 			it("Invokes .preload()", function(){
-				jasmineFixture.read("first.htm");
-				expect(jasmineFixture.preload).toHaveBeenCalledWith("first.htm");
+				jasmineFixtures.read("first.htm");
+				expect(jasmineFixtures.preload).toHaveBeenCalledWith("first.htm");
 			});
 
 		});
@@ -307,9 +307,9 @@ describe("jasmineFixture", function(){
 		describe("Then:", function(){
 
 			it("Returns the content of the given fixture", function(){
-				expect(jasmineFixture.read("first.htm")).toEqual(firstHTML);
-				expect(jasmineFixture.read("second.htm")).toEqual(secondHTML);
-				expect(jasmineFixture.read("person.json")).toEqual(firstJson);
+				expect(jasmineFixtures.read("first.htm")).toEqual(firstHTML);
+				expect(jasmineFixtures.read("second.htm")).toEqual(secondHTML);
+				expect(jasmineFixtures.read("person.json")).toEqual(firstJson);
 			});
 
 		});
@@ -317,24 +317,24 @@ describe("jasmineFixture", function(){
 		describe("Relies on jQuery.ajax to guess the appropriate MIME type:", function(){
 
 			it("CSS fixtures are returned as String", function(){
-				expect(jQuery.type(jasmineFixture.read("style.css"))).toEqual("string");
+				expect(jQuery.type(jasmineFixtures.read("style.css"))).toEqual("string");
 			});
 
 			it("HTML fixtures are returned as String", function(){
-				expect(jQuery.type(jasmineFixture.read("first.htm"))).toEqual("string");
+				expect(jQuery.type(jasmineFixtures.read("first.htm"))).toEqual("string");
 			});
 
 			it("JSON fixtures are returned as Object", function(){
-				expect(jQuery.type(jasmineFixture.read("person.json"))).toEqual("object");
+				expect(jQuery.type(jasmineFixtures.read("person.json"))).toEqual("object");
 			});
 
 			it("Plain text fixtures are returned as String", function(){
-				expect(jQuery.type(jasmineFixture.read("text.txt"))).toEqual("string");
+				expect(jQuery.type(jasmineFixtures.read("text.txt"))).toEqual("string");
 			});
 
 			it("XML fixtures are returned as XMLDocument", function(){
 				// A bit of a dirty trick
-				expect(jasmineFixture.read("person.xml").toString()).toEqual("[object XMLDocument]");
+				expect(jasmineFixtures.read("person.xml").toString()).toEqual("[object XMLDocument]");
 			});
 
 		});
@@ -346,12 +346,12 @@ describe("jasmineFixture", function(){
 		describe("If called with no arguments. Return an object containing name/value pairs:", function(){
 
 			it("basePath", function(){
-				var config = jasmineFixture.setup();
+				var config = jasmineFixtures.setup();
 				expect(config.basePath).toBeDefined();
 			});
 
 			it("containerId", function(){
-				var config = jasmineFixture.setup();
+				var config = jasmineFixtures.setup();
 				expect(config.containerId).toBeDefined();
 			});
 
@@ -360,11 +360,11 @@ describe("jasmineFixture", function(){
 		describe("If a set of name/value pairs is passed as argument. Set the following configuration options:", function(){
 
 			it("basePath", function(){
-				expect(jasmineFixture.setup({basePath: "newPath/"}).basePath).toEqual("newPath/");
+				expect(jasmineFixtures.setup({basePath: "newPath/"}).basePath).toEqual("newPath/");
 			});
 
 			it("containerId", function(){
-				expect(jasmineFixture.setup({containerId: "newId"}).containerId).toEqual("newId");
+				expect(jasmineFixtures.setup({containerId: "newId"}).containerId).toEqual("newId");
 			});
 
 		});
@@ -372,7 +372,7 @@ describe("jasmineFixture", function(){
 		describe("If basePath is set without a trailing slash:", function(){
 
 			it("One is added automatically", function(){
-				expect(jasmineFixture.setup({basePath: "newPath"}).basePath).toEqual("newPath/");
+				expect(jasmineFixtures.setup({basePath: "newPath"}).basePath).toEqual("newPath/");
 			});
 
 		});

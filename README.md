@@ -8,8 +8,8 @@ Heavily inspired by [jasmine-jquery](https://github.com/velesin/jasmine-jquery) 
 
 Either:
 
-- Simply download _jasmine-fixture.min.js_ from [here](https://raw.github.com/MassimoFoti/jasmine-fixture/master/dist/jasmine-fixture.min.js) and include it in your Jasmine's test runner file. Remember to also include jQuery
-- Use Bower ```bower install jasmineFixture```
+- Simply download _jasmineFixtures.min.js_ from [here](https://raw.github.com/MassimoFoti/jasmineFixtures/master/dist/jasmineFixtures.min.js) and include it in your Jasmine's test runner file. Remember to also include jQuery
+- Use Bower ```bower install jasmineFixtures```
 
 ## Fixtures
 
@@ -24,33 +24,33 @@ Whatever here
 Inside your test:
 
 ```js
-var fixtureStr = jasmineFixture.read("myfixture.txt");
+var fixtureStr = jasmineFixtures.read("myfixture.txt");
 runMyCodeHere();
 expect(myVar).toEqual(fixtureStr);
 ```
 
 By default, fixtures are loaded from `fixtures/`.
-You can change configuration using: `jasmineFixture.setup({basePath: "newPath/"});`.
+You can change configuration using: `jasmineFixtures.setup({basePath: "newPath/"});`.
 
 > _Note:_
 > If you are running your test with **Karma**, remember that your files are served from a `base/` directory,
-> so your path should be configured to: `jasmineFixture.setup({basePath: "base/newPath/"});`.
+> so your path should be configured to: `jasmineFixtures.setup({basePath: "base/newPath/"});`.
 
 Fixtures are internally cached, so you can load the same fixture file multiple times without affecting your test suite's speed.
 
 The following methods are provided:
 
-- `jasmineFixture.read(path)` Returns the content of the given fixture
+- `jasmineFixtures.read(path)` Returns the content of the given fixture
   - CSS fixtures are returned as String
   - HTML fixtures are returned as String
   - JSON fixtures are returned as Object
   - Plain text fixtures are returned as String
   - XML fixtures are returned as XMLDocument
   
-- `jasmineFixture.preload(path[, path, ...])`
-  - Pre-loads fixture(s) from one or more files and stores them into cache, without returning them or appending them to the DOM. All subsequent calls will then get fixtures content from cache, without making any XHR calls (unless cache is manually purged by using `jasmineFixture.clearCache()` method).
+- `jasmineFixtures.preload(path[, path, ...])`
+  - Pre-loads fixture(s) from one or more files and stores them into cache, without returning them or appending them to the DOM. All subsequent calls will then get fixtures content from cache, without making any XHR calls (unless cache is manually purged by using `jasmineFixtures.clearCache()` method).
   
-- `jasmineFixture.clearCache()`
+- `jasmineFixtures.clearCache()`
   - Flush/clear the cache 
 
 ## HTML Fixtures
@@ -66,19 +66,19 @@ In _myfixture.htm_:
 Inside your test:
 
 ```js
-jasmineFixture.loadHTML("myfixture.htm");
+jasmineFixtures.loadHTML("myfixture.htm");
 runMyCodeHere();
 expect($("#my-fixture")).to...
 ```
 
-The fixture will be loaded into the `<div id="jasmine-fixtures"></div>` container that is automatically added to the DOM (you can change the configured id using: `jasmineFixture.setup({containerId: "newId"});`). The fixtures container is automatically cleaned-up between tests, so you don't have to worry about left-overs from fixtures loaded in preceeding test.
+The fixture will be loaded into the `<div id="jasmine-fixtures"></div>` container that is automatically added to the DOM (you can change the configured id using: `jasmineFixtures.setup({containerId: "newId"});`). The fixtures container is automatically cleaned-up between tests, so you don't have to worry about left-overs from fixtures loaded in preceeding test.
 
 The following methods are provided:
 
-- `jasmineFixture.appendHTML(path)`
+- `jasmineFixtures.appendHTML(path)`
   - Append the content of the given fixture inside the container. Already existing content, if any, is left untouched
   
-- `jasmineFixture.loadHTML(path)`
+- `jasmineFixtures.loadHTML(path)`
   - Load the content of the given fixture inside the container. Already existing content, if any, is removed
   
 ## CSS Fixtures 
@@ -89,12 +89,12 @@ The fixture will be loaded into the `<head></head>`
 
 The following methods are provided:
 
-- `jasmineFixture.appendCSS(path)`
+- `jasmineFixtures.appendCSS(path)`
   - Append the content of the given fixture inside the `<head>`. Already existing content, if any, is left untouched
   
-- `jasmineFixture.loadCSS(path)`
+- `jasmineFixtures.loadCSS(path)`
   - Load the content of the given fixture inside the `<head>`. Already existing content, if any, is removed
 
 ## Mocking with jasmine-ajax
 
-[jasmine-ajax](https://github.com/jasmine/jasmine-ajax) library doesn't let user to manually start/stop XMLHttpRequest mocking, but instead it overrides XMLHttpRequest automatically when loaded. This breaks jasmine-fixtures as fixture loading mechanism uses jQuery.ajax, that stops working the very moment jasmine-ajax is loaded. A workaround for this may be to invoke `jasmineFixture.preload` function (specifying all required fixtures) before jasmine-ajax is loaded. This way subsequent calls to load or read methods will retrieve fixtures content from cache, without need to use jQuery.ajax and thus will work correctly even after jasmine-ajax is loaded.
+[jasmine-ajax](https://github.com/jasmine/jasmine-ajax) library doesn't let user to manually start/stop XMLHttpRequest mocking, but instead it overrides XMLHttpRequest automatically when loaded. This breaks jasmine-fixtures as fixture loading mechanism uses jQuery.ajax, that stops working the very moment jasmine-ajax is loaded. A workaround for this may be to invoke `jasmineFixtures.preload` function (specifying all required fixtures) before jasmine-ajax is loaded. This way subsequent calls to load or read methods will retrieve fixtures content from cache, without need to use jQuery.ajax and thus will work correctly even after jasmine-ajax is loaded.
