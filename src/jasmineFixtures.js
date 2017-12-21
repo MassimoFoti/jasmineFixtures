@@ -199,7 +199,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 
 }());
 
-afterEach(function(){
+jasmine.getEnv().afterEach(function(){
 	"use strict";
 	jasmineFixtures.clearCSS();
 	jasmineFixtures.clearHTML();
