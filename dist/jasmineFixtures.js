@@ -1,5 +1,5 @@
 /*! 
-jasmine-fixture 0.2 2017-12-21T05:43:27.246Z
+jasmineFixtures 0.2 2017-12-21T05:55:24.229Z
 Copyright 2017 Massimo Foti (massimo@massimocorner.com)
 Licensed under the Apache License, Version 2.0 | http://www.apache.org/licenses/LICENSE-2.0
  */

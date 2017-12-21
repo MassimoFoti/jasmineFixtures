@@ -1,7 +1,7 @@
 {
-	"name": "jasmine-fixture",
+	"name": "jasmineFixtures",
 	"license": "Apache-2.0",
-	"homepage": "https://github.com/MassimoFoti/jasmine-fixture",
+	"homepage": "https://github.com/MassimoFoti/jasmineFixtures",
 	"author": {
 		"name": "Massimo Foti",
 		"email": "massimo@massimocorner.com",
@@ -9,7 +9,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/MassimoFoti/jasmine-fixture"
+		"url": "https://github.com/MassimoFoti/jasmineFixtures"
 	},
 	"devDependencies": {
 		"gulp": "~3.9.0",
