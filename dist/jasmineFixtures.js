@@ -1,5 +1,5 @@
 /*! 
-jasmineFixtures 0.2 2017-12-21T05:55:24.229Z
+jasmineFixtures 0.3 2017-12-22T17:13:08.369Z
 Copyright 2017 Massimo Foti (massimo@massimocorner.com)
 Licensed under the Apache License, Version 2.0 | http://www.apache.org/licenses/LICENSE-2.0
  */
@@ -23,7 +23,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 (function(){
 	"use strict";
 
-	jasmineFixtures.version = "0.2";
+	jasmineFixtures.version = "0.3";
 
 	/**
 	 * @type {jasmineFixtures.options}
@@ -115,6 +115,21 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	};
 
 	/**
+	 * @param {String} css
+	 */
+	jasmineFixtures.setCSS = function(css){
+		jasmineFixtures.clearCSS();
+		appendStyle(css);
+	};
+
+	/**
+	 * @param {String} html
+	 */
+	jasmineFixtures.setHTML = function(html){
+		loadIntoContainer(html);
+	};
+
+	/**
 	 * Change¨/retrieve current configuration
 	 * @param {jasmineFixtures.options} [options]
 	 * @return {jasmineFixtures.options}
@@ -183,7 +198,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	 * @param {String} path
 	 * @return {String|Object}
 	 */
-	var readFromCache = function(path) {
+	var readFromCache = function(path){
 		return jasmineFixtures.cache[assembleUrl(path)];
 	};
 
@@ -204,7 +219,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 
 }());
 
-afterEach(function(){
+jasmine.getEnv().afterEach(function(){
 	"use strict";
 	jasmineFixtures.clearCSS();
 	jasmineFixtures.clearHTML();

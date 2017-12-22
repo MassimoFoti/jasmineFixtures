@@ -18,7 +18,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 (function(){
 	"use strict";
 
-	jasmineFixtures.version = "0.2";
+	jasmineFixtures.version = "0.3";
 
 	/**
 	 * @type {jasmineFixtures.options}
