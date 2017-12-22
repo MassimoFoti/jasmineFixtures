@@ -1,3 +1,6 @@
+- jasmineFixtures.setHTML()
+- jasmineFixtures.setCSS()
+
 - Update to jQuery 3
 - Add release notes
 
