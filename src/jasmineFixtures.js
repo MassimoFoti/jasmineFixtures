@@ -110,6 +110,13 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	};
 
 	/**
+	 * @param {String} html
+	 */
+	jasmineFixtures.setHTML = function(html){
+		loadIntoContainer(html);
+	};
+
+	/**
 	 * Change¨/retrieve current configuration
 	 * @param {jasmineFixtures.options} [options]
 	 * @return {jasmineFixtures.options}
@@ -178,7 +185,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	 * @param {String} path
 	 * @return {String|Object}
 	 */
-	var readFromCache = function(path) {
+	var readFromCache = function(path){
 		return jasmineFixtures.cache[assembleUrl(path)];
 	};
 

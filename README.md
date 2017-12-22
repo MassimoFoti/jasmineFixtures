@@ -81,6 +81,9 @@ The following methods are provided:
 - `jasmineFixtures.loadHTML(path)`
   - Load the content of the given fixture inside the container. Already existing content, if any, is removed
   
+- `jasmineFixtures.setHTML(html)`
+  - Load the the given HTML, passed as string, inside the container. Without any XHR call. Already existing content, if any, is removed  
+  
 ## CSS Fixtures 
 
 Allows you to load CSS content on the page while testing.

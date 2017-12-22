@@ -341,6 +341,29 @@ describe("jasmineFixtures", function(){
 
 	});
 
+	describe(".setHTML()", function(){
+
+		describe("Given a string:", function(){
+
+			it("Inject the content of the given fixture inside the container", function(){
+				jasmineFixtures.setHTML(firstHTML);
+				expect(jQuery("body").find("#" + jasmineFixtures.setup().containerId).html()).toEqual(firstHTML);
+			});
+
+		});
+
+		describe("If invoked more than once in a row:", function(){
+
+			it("Will remove previously injected/loaded HTML, if any", function(){
+				jasmineFixtures.setHTML(firstHTML);
+				jasmineFixtures.setHTML(secondHTML);
+				expect(jQuery("body").find("#" + jasmineFixtures.setup().containerId).html()).toEqual(secondHTML);
+			});
+
+		});
+
+	});
+
 	describe(".setup()", function(){
 
 		describe("If called with no arguments. Return an object containing name/value pairs:", function(){
