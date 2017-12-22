@@ -98,6 +98,9 @@ The following methods are provided:
 - `jasmineFixtures.loadCSS(path)`
   - Load the content of the given fixture inside the `<head>`. Already existing content, if any, is removed
 
+- `jasmineFixtures.setCSS(css)`
+  - Load the content of the given CSS, passed as string, inside the `<head>`. Already existing content, if any, is removed
+
 ## Mocking with jasmine-ajax
 
 [jasmine-ajax](https://github.com/jasmine/jasmine-ajax) library doesn't let user to manually start/stop XMLHttpRequest mocking, but instead it overrides XMLHttpRequest automatically when loaded. This breaks jasmine-fixtures as fixture loading mechanism uses jQuery.ajax, that stops working the very moment jasmine-ajax is loaded. A workaround for this may be to invoke `jasmineFixtures.preload` function (specifying all required fixtures) before jasmine-ajax is loaded. This way subsequent calls to load or read methods will retrieve fixtures content from cache, without need to use jQuery.ajax and thus will work correctly even after jasmine-ajax is loaded.

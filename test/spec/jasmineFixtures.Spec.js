@@ -341,11 +341,40 @@ describe("jasmineFixtures", function(){
 
 	});
 
+	describe(".setCSS()", function(){
+
+		describe("Given a chunk of CSS as string:", function(){
+
+			it("Inject the content of the given string inside a <style> tag located inside the <head>", function(){
+				var cssStr = jasmineFixtures.read("style.css");
+				expect(jQuery("head style").length).toEqual(0);
+				jasmineFixtures.setCSS(cssStr);
+				expect(jQuery("head style").length).toEqual(1);
+				expect(jQuery("head style").text()).toEqual(cssStr);
+			});
+
+		});
+
+		describe("If invoked more than once in a row:", function(){
+
+			it("Will remove previously injected/loaded CSS, if any", function(){
+				var firstStr = jasmineFixtures.read("style.css");
+				var secondStr = jasmineFixtures.read("more.css");
+				jasmineFixtures.setCSS(firstStr);
+				jasmineFixtures.setCSS(secondStr);
+				expect(jQuery("head style").length).toEqual(1);
+				expect(jQuery("head style").text()).toEqual(secondStr);
+			});
+
+		});
+
+	});
+
 	describe(".setHTML()", function(){
 
-		describe("Given a string:", function(){
+		describe("Given a chunk of HTML as string:", function(){
 
-			it("Inject the content of the given fixture inside the container", function(){
+			it("Inject the content of the given string inside the container", function(){
 				jasmineFixtures.setHTML(firstHTML);
 				expect(jQuery("body").find("#" + jasmineFixtures.setup().containerId).html()).toEqual(firstHTML);
 			});

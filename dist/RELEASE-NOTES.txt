@@ -2,10 +2,8 @@
 Release 0.2
 ---------------------------------------------------------------------
 NEW FEATURES:
+* jasmineFixtures.setCSS()
 * jasmineFixtures.setHTML()
-
-NOTES:
-*
 
 CHANGES:
 * Removed direct invocation of afterEach, replaced with jasmine.getEnv().afterEach

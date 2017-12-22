@@ -110,6 +110,14 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	};
 
 	/**
+	 * @param {String} css
+	 */
+	jasmineFixtures.setCSS = function(css){
+		jasmineFixtures.clearCSS();
+		appendStyle(css);
+	};
+
+	/**
 	 * @param {String} html
 	 */
 	jasmineFixtures.setHTML = function(html){
