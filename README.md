@@ -117,4 +117,4 @@ jasmineFixtures will not load any subresources contained inside the fixtures suc
 
 ## Looking for additional matchers for Jasmine?
 
-Take a look at [jasmineMatchers](https://github.com/MassimoFoti/jasmineMatchers````)
+Take a look at [jasmineMatchers](https://github.com/MassimoFoti/jasmineMatchers)
