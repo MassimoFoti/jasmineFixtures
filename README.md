@@ -111,6 +111,10 @@ This way subsequent calls to load or read methods will retrieve fixtures content
 
 As an alternative you can call jasmineFixtures before `jasmine.Ajax.install()` is invoked.
 
+## Loading subresources
+
+jasmineFixtures will not load any subresources contained inside the fixtures such as scripts, stylesheets, or iframes. 
+
 ## Looking for additional matchers for Jasmine?
 
 Take a look at [jasmineMatchers](https://github.com/MassimoFoti/jasmineMatchers````)
