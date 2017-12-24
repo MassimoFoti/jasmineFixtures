@@ -10,18 +10,10 @@ describe("jasmineFixtures", function(){
 			"firstName": "ciccio",
 			"lastName": "pasticcio"
 		};
-		jasmineFixtures.setup({
-			basePath: FIXTURES_BASE_PATH,
-			containerId: "jasmine-fixtures"
-		});
 	});
 
 	afterEach(function(){
 		jasmineFixtures.clearCache();
-		jasmineFixtures.setup({
-			basePath: FIXTURES_BASE_PATH,
-			containerId: "jasmine-fixtures"
-		});
 	});
 
 	it("Requires Jasmine and jQuery in order to work", function(){

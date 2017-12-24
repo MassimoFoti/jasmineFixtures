@@ -4,4 +4,18 @@
 
 	This requires a different configuration for fixtures compared to the HTML runner
  */
-var FIXTURES_BASE_PATH = "base/test/fixtures";
+beforeEach(function(){
+	"use strict";
+	jasmineFixtures.setup({
+		basePath: "base/test/fixtures",
+		containerId: "jasmine-fixtures"
+	});
+});
+
+afterEach(function(){
+	"use strict";
+	jasmineFixtures.setup({
+		basePath: "base/test/fixtures",
+		containerId: "jasmine-fixtures"
+	});
+});
