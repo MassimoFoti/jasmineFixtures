@@ -255,7 +255,8 @@ describe("jasmineFixtures", function(){
 			expect(jQuery.ajax).toHaveBeenCalledWith({
 				url: basePath + "first.htm",
 				async: false,
-				cache: false
+				cache: false,
+				method: "GET"
 			});
 
 			jasmineFixtures.setup({basePath: "missingfolder/"});

@@ -204,7 +204,8 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 		jQuery.ajax({
 			url: url,
 			async: false, // Must be synchronous to ensure fixtures are loaded before test run
-			cache: false
+			cache: false,
+			method: "GET"
 		}).done(function(data){
 			jasmineFixtures.cache[url] = data;
 		}).fail(function(jqXHR){
