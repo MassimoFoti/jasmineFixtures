@@ -62,6 +62,11 @@ describe("jasmineFixtures", function(){
 
 	describe(".appendCSS()", function(){
 
+		beforeEach(function(){
+			// Just to be sure we start fresh
+			jQuery("head style").remove();
+		});
+
 		describe("First:", function(){
 
 			it("Invokes .preload()", function(){
