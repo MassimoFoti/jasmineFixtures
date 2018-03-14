@@ -125,7 +125,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	};
 
 	/**
-	 * Change¨/retrieve current configuration
+	 * Change/retrieve current configuration
 	 * @param {jasmineFixtures.options} [options]
 	 * @return {jasmineFixtures.options}
 	 */
