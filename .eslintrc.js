@@ -92,11 +92,12 @@ module.exports = {
 				},
 				preferType: {
 					// Use the right string instead of the left one
-					'object': 'Object',
-					'boolean': 'Boolean',
-					'number': 'Number',
-					'string': 'String',
-					'array': 'Array'
+					"object": "Object",
+					"boolean": "Boolean",
+					"number": "Number",
+					"function": "Function",
+					"string": "String",
+					"array": "Array"
 				},
 
 				// If and only if the function or method has a return statement (this option value does apply to constructors)
@@ -108,8 +109,8 @@ module.exports = {
 		],
 
 		// IE11 specific rules
-		'ie11/no-for-in-const': ['error'], // Error in IE11
-		'ie11/no-weak-collections': ['error'], // Error in IE11
-		'ie11/no-collection-args': ['error']
+		"ie11/no-for-in-const": ["error"], // Error in IE11
+		"ie11/no-weak-collections": ["error"], // Error in IE11
+		"ie11/no-collection-args": ["error"]
 	}
 };
