@@ -15,7 +15,6 @@ module.exports = {
 
 	// Globals
 	globals: {
-		// Libs
 		"jasmineFixtures": false
 	},
 
@@ -26,7 +25,7 @@ module.exports = {
 		}
 	},
 
-	plugins: ['ie11'],
+	plugins: ["ie11"],
 
 	rules: {
 		"camelcase": ["error"],
