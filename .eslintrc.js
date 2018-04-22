@@ -9,8 +9,7 @@ module.exports = {
 	env: {
 		es6: false,
 		browser: true,
-		jasmine: true,
-		jquery: true
+		jasmine: true
 	},
 
 	// Globals

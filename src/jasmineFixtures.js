@@ -1,8 +1,3 @@
-/* istanbul ignore if */
-if(typeof(jQuery) === "undefined"){
-	throw("Unable to find jQuery");
-}
-
 /* istanbul ignore else */
 if(typeof(window.jasmineFixtures) === "undefined"){
 	window.jasmineFixtures = {};
@@ -29,7 +24,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	};
 
 	/**
-	 * @type {Array.<JQuery>}
+	 * @type {Array.<HTMLElement>}
 	 */
 	var styleNodes = [];
 
@@ -44,12 +39,15 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 
 	jasmineFixtures.clearCSS = function(){
 		styleNodes.forEach(function(element){
-			element.remove();
+			if(element.parentNode !== null){
+				element.parentNode.removeChild(element);
+			}
 		});
 	};
 
 	jasmineFixtures.clearHTML = function(){
-		getContainer().remove();
+		var container = getContainer();
+		container.parentNode.removeChild(container);
 	};
 
 	/**
@@ -89,12 +87,12 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	 * @param {String|Array.<String>} path
 	 */
 	jasmineFixtures.preload = function(path){
-		if(jQuery.type(path) === "string"){
+		if(typeof path === "string"){
 			path = [path];
 		}
 		path.forEach(function(element){
 			var fullUrl = assembleUrl(element);
-			if(jQuery.type(jasmineFixtures.cache[fullUrl]) === "undefined"){
+			if(jasmineFixtures.cache[fullUrl] === undefined){
 				readIntoCache(fullUrl);
 			}
 		});
@@ -130,10 +128,17 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	 * @return {jasmineFixtures.options}
 	 */
 	jasmineFixtures.setup = function(options){
-		jQuery.extend(config, options);
-		// Ensure we always have a trailing slash
-		if(config.basePath[config.basePath.length - 1] !== "/"){
-			config.basePath += "/";
+		if(options !== undefined){
+			if(options.containerId !== undefined){
+				config.containerId = options.containerId;
+			}
+			if(options.basePath !== undefined){
+				config.basePath = options.basePath;
+			}
+			// Ensure we always have a trailing slash
+			if(config.basePath[config.basePath.length - 1] !== "/"){
+				config.basePath += "/";
+			}
 		}
 		return config;
 	};
@@ -142,10 +147,10 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	 * @param {String} css
 	 */
 	var appendStyle = function(css){
-		var cssNode = jQuery("<style>");
-		cssNode.text(css);
+		var cssNode = document.createElement("style");
+		cssNode.innerHTML = css;
 		styleNodes.push(cssNode);
-		jQuery("head").append(cssNode);
+		document.querySelector("head").appendChild(cssNode);
 	};
 
 	/**
@@ -153,7 +158,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	 */
 	var appendToContainer = function(html){
 		var container = getContainer();
-		container.append(html);
+		container.innerHTML += html;
 	};
 
 	/**
@@ -165,17 +170,17 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	};
 
 	/**
-	 * @return {JQuery}
+	 * @return {HTMLElement}
 	 */
 	var getContainer = function(){
-		var currentContainer = jQuery("body").find("#" + config.containerId);
-		if(currentContainer.length !== 0){
+		var currentContainer = document.getElementById(config.containerId);
+		if(currentContainer !== null){
 			return currentContainer;
 		}
 		else{
-			var container = jQuery("<div>");
-			container.attr("id", config.containerId);
-			jQuery("body").append(container);
+			var container = document.createElement("div");
+			container.setAttribute("id", config.containerId);
+			document.body.appendChild(container);
 			return container;
 		}
 	};
@@ -185,8 +190,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	 */
 	var loadIntoContainer = function(html){
 		var container = getContainer();
-		container.empty();
-		container.append(html);
+		container.innerHTML = html;
 	};
 
 	/**

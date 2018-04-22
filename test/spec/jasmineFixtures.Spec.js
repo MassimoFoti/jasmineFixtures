@@ -16,11 +16,6 @@ describe("jasmineFixtures", function(){
 		jasmineFixtures.clearCache();
 	});
 
-	it("Requires Jasmine and jQuery in order to work", function(){
-		expect(jasmine).toBeDefined();
-		expect(jQuery).toBeDefined();
-	});
-
 	it("Lives inside its own namespace", function(){
 		expect(jasmineFixtures).toBeDefined();
 	});
@@ -34,10 +29,6 @@ describe("jasmineFixtures", function(){
 	});
 
 	describe(".cache", function(){
-
-		it("Is a plain object", function(){
-			expect(jQuery.isPlainObject(jasmineFixtures.cache)).toEqual(true);
-		});
 
 		it("Contains no keys out of the box", function(){
 			expect(Object.keys(jasmineFixtures.cache).length).toEqual(0);
@@ -63,8 +54,13 @@ describe("jasmineFixtures", function(){
 	describe(".appendCSS()", function(){
 
 		beforeEach(function(){
-			// Just to be sure we start fresh
-			jQuery("head style").remove();
+
+			Array.prototype.slice.call(document.querySelectorAll("head style")).forEach(function(element){
+				if(element.parentNode !== null){
+					element.parentNode.removeChild(element);
+				}
+			});
+
 		});
 
 		describe("First:", function(){
@@ -80,10 +76,10 @@ describe("jasmineFixtures", function(){
 		describe("Then:", function(){
 
 			it("Inject the content of the given fixture inside a <style> tag located inside the <head>", function(){
-				expect(jQuery("head style").length).toEqual(0);
+				expect(document.querySelectorAll("head style").length).toEqual(0);
 				jasmineFixtures.appendCSS("style.css");
-				expect(jQuery("head style").length).toEqual(1);
-				expect(jQuery("head style").text()).toEqual(jasmineFixtures.read("style.css"));
+				expect(document.querySelectorAll("head style").length).toEqual(1);
+				expect(document.querySelectorAll("head style")[0].textContent).toEqual(jasmineFixtures.read("style.css"));
 			});
 
 		});
@@ -93,9 +89,9 @@ describe("jasmineFixtures", function(){
 			it("The content is added to pre-existing fixture content, if any", function(){
 				jasmineFixtures.appendCSS("style.css");
 				jasmineFixtures.appendCSS("more.css");
-				expect(jQuery("head style").length).toEqual(2);
-				expect(jQuery(jQuery("head style")[0]).text()).toEqual(jasmineFixtures.read("style.css"));
-				expect(jQuery(jQuery("head style")[1]).text()).toEqual(jasmineFixtures.read("more.css"));
+				expect(document.querySelectorAll("head style").length).toEqual(2);
+				expect(document.querySelectorAll("head style")[0].textContent).toEqual(jasmineFixtures.read("style.css"));
+				expect(document.querySelectorAll("head style")[1].textContent).toEqual(jasmineFixtures.read("more.css"));
 			});
 
 		});
@@ -118,7 +114,7 @@ describe("jasmineFixtures", function(){
 
 			it("Append the content of the given fixture inside the container", function(){
 				jasmineFixtures.appendHTML("first.htm");
-				expect(jQuery("body").find("#" + jasmineFixtures.setup().containerId).html()).toEqual(firstHTML);
+				expect(document.getElementById(jasmineFixtures.setup().containerId).innerHTML).toEqual(firstHTML);
 			});
 
 		});
@@ -128,7 +124,7 @@ describe("jasmineFixtures", function(){
 			it("The content is added to pre-existing fixture content, if any", function(){
 				jasmineFixtures.appendHTML("first.htm");
 				jasmineFixtures.appendHTML("second.htm");
-				expect(jQuery("body").find("#" + jasmineFixtures.setup().containerId).html()).toEqual(firstHTML + secondHTML);
+				expect(document.getElementById(jasmineFixtures.setup().containerId).innerHTML).toEqual(firstHTML + secondHTML);
 			});
 
 		});
@@ -150,9 +146,9 @@ describe("jasmineFixtures", function(){
 
 		it("Remove the container from the <body>", function(){
 			jasmineFixtures.loadHTML("first.htm");
-			expect(jQuery("body").find("#" + jasmineFixtures.setup().containerId).length).toEqual(1);
+			expect(document.getElementById(jasmineFixtures.setup().containerId)).not.toBeNull();
 			jasmineFixtures.clearHTML();
-			expect(jQuery("body").find("#" + jasmineFixtures.setup().containerId).length).toEqual(0);
+			expect(document.getElementById(jasmineFixtures.setup().containerId)).toBeNull();
 		});
 
 	});
@@ -172,10 +168,10 @@ describe("jasmineFixtures", function(){
 		describe("Then:", function(){
 
 			it("Inject the content of the given fixture inside a <style> tag located inside the <head>", function(){
-				expect(jQuery("head style").length).toEqual(0);
+				expect(document.querySelectorAll("head style").length).toEqual(0);
 				jasmineFixtures.loadCSS("style.css");
-				expect(jQuery("head style").length).toEqual(1);
-				expect(jQuery("head style").text()).toEqual(jasmineFixtures.read("style.css"));
+				expect(document.querySelectorAll("head style").length).toEqual(1);
+				expect(document.querySelectorAll("head style")[0].textContent).toEqual(jasmineFixtures.read("style.css"));
 			});
 
 		});
@@ -185,8 +181,8 @@ describe("jasmineFixtures", function(){
 			it("Will remove previously loaded fixtures, if any", function(){
 				jasmineFixtures.loadCSS("style.css");
 				jasmineFixtures.loadCSS("more.css");
-				expect(jQuery("head style").length).toEqual(1);
-				expect(jQuery("head style").text()).toEqual(jasmineFixtures.read("more.css"));
+				expect(document.querySelectorAll("head style").length).toEqual(1);
+				expect(document.querySelectorAll("head style")[0].textContent).toEqual(jasmineFixtures.read("more.css"));
 			});
 
 		});
@@ -209,7 +205,7 @@ describe("jasmineFixtures", function(){
 
 			it("Inject the content of the given fixture inside the container", function(){
 				jasmineFixtures.loadHTML("first.htm");
-				expect(jQuery("body").find("#" + jasmineFixtures.setup().containerId).html()).toEqual(firstHTML);
+				expect(document.getElementById(jasmineFixtures.setup().containerId).innerHTML).toEqual(firstHTML);
 			});
 
 		});
@@ -219,7 +215,7 @@ describe("jasmineFixtures", function(){
 			it("Will remove previously loaded fixtures, if any", function(){
 				jasmineFixtures.loadHTML("first.htm");
 				jasmineFixtures.loadHTML("second.htm");
-				expect(jQuery("body").find("#" + jasmineFixtures.setup().containerId).html()).toEqual(secondHTML);
+				expect(document.getElementById(jasmineFixtures.setup().containerId).innerHTML).toEqual(secondHTML);
 			});
 
 		});
@@ -315,19 +311,19 @@ describe("jasmineFixtures", function(){
 		describe("Relies on jQuery.ajax to guess the appropriate MIME type:", function(){
 
 			it("CSS fixtures are returned as String", function(){
-				expect(jQuery.type(jasmineFixtures.read("style.css"))).toEqual("string");
+				expect(typeof jasmineFixtures.read("style.css")).toEqual("string");
 			});
 
 			it("HTML fixtures are returned as String", function(){
-				expect(jQuery.type(jasmineFixtures.read("first.htm"))).toEqual("string");
+				expect(typeof jasmineFixtures.read("first.htm")).toEqual("string");
 			});
 
 			it("JSON fixtures are returned as Object", function(){
-				expect(jQuery.type(jasmineFixtures.read("person.json"))).toEqual("object");
+				expect(typeof jasmineFixtures.read("person.json")).toEqual("object");
 			});
 
 			it("Plain text fixtures are returned as String", function(){
-				expect(jQuery.type(jasmineFixtures.read("text.txt"))).toEqual("string");
+				expect(typeof jasmineFixtures.read("text.txt")).toEqual("string");
 			});
 
 			it("XML fixtures are returned as XMLDocument", function(){
@@ -345,10 +341,10 @@ describe("jasmineFixtures", function(){
 
 			it("Inject the content of the given string inside a <style> tag located inside the <head>", function(){
 				var cssStr = jasmineFixtures.read("style.css");
-				expect(jQuery("head style").length).toEqual(0);
+				expect(document.querySelectorAll("head style").length).toEqual(0);
 				jasmineFixtures.setCSS(cssStr);
-				expect(jQuery("head style").length).toEqual(1);
-				expect(jQuery("head style").text()).toEqual(cssStr);
+				expect(document.querySelectorAll("head style").length).toEqual(1);
+				expect(document.querySelectorAll("head style")[0].textContent).toEqual(cssStr);
 			});
 
 		});
@@ -360,8 +356,8 @@ describe("jasmineFixtures", function(){
 				var secondStr = jasmineFixtures.read("more.css");
 				jasmineFixtures.setCSS(firstStr);
 				jasmineFixtures.setCSS(secondStr);
-				expect(jQuery("head style").length).toEqual(1);
-				expect(jQuery("head style").text()).toEqual(secondStr);
+				expect(document.querySelectorAll("head style").length).toEqual(1);
+				expect(document.querySelectorAll("head style")[0].textContent).toEqual(secondStr);
 			});
 
 		});
@@ -374,7 +370,7 @@ describe("jasmineFixtures", function(){
 
 			it("Inject the content of the given string inside the container", function(){
 				jasmineFixtures.setHTML(firstHTML);
-				expect(jQuery("body").find("#" + jasmineFixtures.setup().containerId).html()).toEqual(firstHTML);
+				expect(document.getElementById(jasmineFixtures.setup().containerId).innerHTML).toEqual(firstHTML);
 			});
 
 		});
@@ -384,7 +380,7 @@ describe("jasmineFixtures", function(){
 			it("Will remove previously injected/loaded HTML, if any", function(){
 				jasmineFixtures.setHTML(firstHTML);
 				jasmineFixtures.setHTML(secondHTML);
-				expect(jQuery("body").find("#" + jasmineFixtures.setup().containerId).html()).toEqual(secondHTML);
+				expect(document.getElementById(jasmineFixtures.setup().containerId).innerHTML).toEqual(secondHTML);
 			});
 
 		});
