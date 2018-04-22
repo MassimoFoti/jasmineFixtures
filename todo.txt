@@ -1,6 +1,7 @@
 - Add link to Github to the header
 
-Version 2.0
+Version 1.0
 
 - Drop support for IE 9/10
-- Use const/let and Map
+- Use const/let
+- Remove jQuery
