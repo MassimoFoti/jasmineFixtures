@@ -8,7 +8,7 @@ Heavily inspired by [jasmine-jquery](https://github.com/velesin/jasmine-jquery) 
 
 Either:
 
-- Simply download _jasmineFixtures.min.js_ from [here](https://raw.github.com/MassimoFoti/jasmineFixtures/master/dist/jasmineFixtures.min.js) and include it in your Jasmine's test runner file. Remember to also include jQuery
+- Simply download _jasmineFixtures.min.js_ from [here](https://raw.github.com/MassimoFoti/jasmineFixtures/master/dist/jasmineFixtures.min.js) and include it in your Jasmine's test runner file.
 - Use Bower ```bower install jasmineFixtures```
 
 ## Fixtures

@@ -1,13 +1,9 @@
 /*! 
-jasmineFixtures 0.3 2017-12-22T17:13:08.369Z
-Copyright 2017 Massimo Foti (massimo@massimocorner.com)
+jasmineFixtures 1.0 2018-04-22T20:11:26.088Z
+https://github.com/MassimoFoti/jasmineFixtures
+Copyright 2017-2018 Massimo Foti (massimo@massimocorner.com)
 Licensed under the Apache License, Version 2.0 | http://www.apache.org/licenses/LICENSE-2.0
  */
-/* istanbul ignore if */
-if(typeof(jQuery) === "undefined"){
-	throw("Unable to find jQuery");
-}
-
 /* istanbul ignore else */
 if(typeof(window.jasmineFixtures) === "undefined"){
 	window.jasmineFixtures = {};
@@ -23,20 +19,20 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 (function(){
 	"use strict";
 
-	jasmineFixtures.version = "0.3";
+	jasmineFixtures.version = "1.0";
 
 	/**
 	 * @type {jasmineFixtures.options}
 	 */
-	var config = {
+	const config = {
 		basePath: "fixtures/",
 		containerId: "jasmine-fixtures"
 	};
 
 	/**
-	 * @type {Array.<JQuery>}
+	 * @type {Array.<HTMLElement>}
 	 */
-	var styleNodes = [];
+	const styleNodes = [];
 
 	/**
 	 * @type {Object.<String, String>}
@@ -49,12 +45,15 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 
 	jasmineFixtures.clearCSS = function(){
 		styleNodes.forEach(function(element){
-			element.remove();
+			if(element.parentNode !== null){
+				element.parentNode.removeChild(element);
+			}
 		});
 	};
 
 	jasmineFixtures.clearHTML = function(){
-		getContainer().remove();
+		const container = getContainer();
+		container.parentNode.removeChild(container);
 	};
 
 	/**
@@ -94,12 +93,12 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	 * @param {String|Array.<String>} path
 	 */
 	jasmineFixtures.preload = function(path){
-		if(jQuery.type(path) === "string"){
+		if(typeof path === "string"){
 			path = [path];
 		}
 		path.forEach(function(element){
-			var fullUrl = assembleUrl(element);
-			if(jQuery.type(jasmineFixtures.cache[fullUrl]) === "undefined"){
+			const fullUrl = assembleUrl(element);
+			if(jasmineFixtures.cache[fullUrl] === undefined){
 				readIntoCache(fullUrl);
 			}
 		});
@@ -130,15 +129,22 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	};
 
 	/**
-	 * Change¨/retrieve current configuration
+	 * Change/retrieve current configuration
 	 * @param {jasmineFixtures.options} [options]
 	 * @return {jasmineFixtures.options}
 	 */
 	jasmineFixtures.setup = function(options){
-		jQuery.extend(config, options);
-		// Ensure we always have a trailing slash
-		if(config.basePath[config.basePath.length - 1] !== "/"){
-			config.basePath += "/";
+		if(options !== undefined){
+			if(options.containerId !== undefined){
+				config.containerId = options.containerId;
+			}
+			if(options.basePath !== undefined){
+				config.basePath = options.basePath;
+			}
+			// Ensure we always have a trailing slash
+			if(config.basePath[config.basePath.length - 1] !== "/"){
+				config.basePath += "/";
+			}
 		}
 		return config;
 	};
@@ -146,41 +152,41 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	/**
 	 * @param {String} css
 	 */
-	var appendStyle = function(css){
-		var cssNode = jQuery("<style>");
-		cssNode.text(css);
+	const appendStyle = function(css){
+		const cssNode = document.createElement("style");
+		cssNode.innerHTML = css;
 		styleNodes.push(cssNode);
-		jQuery("head").append(cssNode);
+		document.querySelector("head").appendChild(cssNode);
 	};
 
 	/**
 	 * @param {String} html
 	 */
-	var appendToContainer = function(html){
-		var container = getContainer();
-		container.append(html);
+	const appendToContainer = function(html){
+		const container = getContainer();
+		container.innerHTML += html;
 	};
 
 	/**
 	 * @param {String} path
 	 * @return {String}
 	 */
-	var assembleUrl = function(path){
+	const assembleUrl = function(path){
 		return config.basePath + path;
 	};
 
 	/**
-	 * @return {JQuery}
+	 * @return {HTMLElement}
 	 */
-	var getContainer = function(){
-		var currentContainer = jQuery("body").find("#" + config.containerId);
-		if(currentContainer.length !== 0){
+	const getContainer = function(){
+		const currentContainer = document.getElementById(config.containerId);
+		if(currentContainer !== null){
 			return currentContainer;
 		}
 		else{
-			var container = jQuery("<div>");
-			container.attr("id", config.containerId);
-			jQuery("body").append(container);
+			const container = document.createElement("div");
+			container.setAttribute("id", config.containerId);
+			document.body.appendChild(container);
 			return container;
 		}
 	};
@@ -188,28 +194,28 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	/**
 	 * @param {String} html
 	 */
-	var loadIntoContainer = function(html){
-		var container = getContainer();
-		container.empty();
-		container.append(html);
+	const loadIntoContainer = function(html){
+		const container = getContainer();
+		container.innerHTML = html;
 	};
 
 	/**
 	 * @param {String} path
 	 * @return {String|Object}
 	 */
-	var readFromCache = function(path){
+	const readFromCache = function(path){
 		return jasmineFixtures.cache[assembleUrl(path)];
 	};
 
 	/**
 	 * @param {String} url
 	 */
-	var readIntoCache = function(url){
+	const readIntoCache = function(url){
 		jQuery.ajax({
 			url: url,
 			async: false, // Must be synchronous to ensure fixtures are loaded before test run
-			cache: false
+			cache: false,
+			method: "GET"
 		}).done(function(data){
 			jasmineFixtures.cache[url] = data;
 		}).fail(function(jqXHR){

@@ -13,12 +13,12 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 (function(){
 	"use strict";
 
-	jasmineFixtures.version = "0.3";
+	jasmineFixtures.version = "1.0";
 
 	/**
 	 * @type {jasmineFixtures.options}
 	 */
-	var config = {
+	const config = {
 		basePath: "fixtures/",
 		containerId: "jasmine-fixtures"
 	};
@@ -26,7 +26,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	/**
 	 * @type {Array.<HTMLElement>}
 	 */
-	var styleNodes = [];
+	const styleNodes = [];
 
 	/**
 	 * @type {Object.<String, String>}
@@ -46,7 +46,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	};
 
 	jasmineFixtures.clearHTML = function(){
-		var container = getContainer();
+		const container = getContainer();
 		container.parentNode.removeChild(container);
 	};
 
@@ -91,7 +91,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 			path = [path];
 		}
 		path.forEach(function(element){
-			var fullUrl = assembleUrl(element);
+			const fullUrl = assembleUrl(element);
 			if(jasmineFixtures.cache[fullUrl] === undefined){
 				readIntoCache(fullUrl);
 			}
@@ -146,8 +146,8 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	/**
 	 * @param {String} css
 	 */
-	var appendStyle = function(css){
-		var cssNode = document.createElement("style");
+	const appendStyle = function(css){
+		const cssNode = document.createElement("style");
 		cssNode.innerHTML = css;
 		styleNodes.push(cssNode);
 		document.querySelector("head").appendChild(cssNode);
@@ -156,8 +156,8 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	/**
 	 * @param {String} html
 	 */
-	var appendToContainer = function(html){
-		var container = getContainer();
+	const appendToContainer = function(html){
+		const container = getContainer();
 		container.innerHTML += html;
 	};
 
@@ -165,20 +165,20 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	 * @param {String} path
 	 * @return {String}
 	 */
-	var assembleUrl = function(path){
+	const assembleUrl = function(path){
 		return config.basePath + path;
 	};
 
 	/**
 	 * @return {HTMLElement}
 	 */
-	var getContainer = function(){
-		var currentContainer = document.getElementById(config.containerId);
+	const getContainer = function(){
+		const currentContainer = document.getElementById(config.containerId);
 		if(currentContainer !== null){
 			return currentContainer;
 		}
 		else{
-			var container = document.createElement("div");
+			const container = document.createElement("div");
 			container.setAttribute("id", config.containerId);
 			document.body.appendChild(container);
 			return container;
@@ -188,8 +188,8 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	/**
 	 * @param {String} html
 	 */
-	var loadIntoContainer = function(html){
-		var container = getContainer();
+	const loadIntoContainer = function(html){
+		const container = getContainer();
 		container.innerHTML = html;
 	};
 
@@ -197,14 +197,14 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	 * @param {String} path
 	 * @return {String|Object}
 	 */
-	var readFromCache = function(path){
+	const readFromCache = function(path){
 		return jasmineFixtures.cache[assembleUrl(path)];
 	};
 
 	/**
 	 * @param {String} url
 	 */
-	var readIntoCache = function(url){
+	const readIntoCache = function(url){
 		jQuery.ajax({
 			url: url,
 			async: false, // Must be synchronous to ensure fixtures are loaded before test run

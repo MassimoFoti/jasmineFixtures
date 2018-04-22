@@ -2,7 +2,7 @@ describe("jasmineFixtures", function(){
 
 	"use strict";
 
-	var firstHTML, secondHTML, firstJson;
+	let firstHTML, secondHTML, firstJson;
 	beforeEach(function(){
 		firstHTML = "<div>Test1</div>";
 		secondHTML = "<div>Test2</div>";
@@ -229,14 +229,14 @@ describe("jasmineFixtures", function(){
 		});
 
 		it("Put the content of the given fixture inside .cache", function(){
-			var basePath = jasmineFixtures.setup().basePath;
+			const basePath = jasmineFixtures.setup().basePath;
 			expect(jasmineFixtures.cache[basePath + "first.htm"]).not.toBeDefined();
 			jasmineFixtures.preload("first.htm");
 			expect(jasmineFixtures.cache[basePath + "first.htm"]).toEqual(firstHTML);
 		});
 
 		it("Accepts either a single string or an array of strings as its only argument", function(){
-			var basePath = jasmineFixtures.setup().basePath;
+			const basePath = jasmineFixtures.setup().basePath;
 			jasmineFixtures.preload("first.htm");
 			jasmineFixtures.preload(["first.htm", "second.htm", "person.json"]);
 			expect(jasmineFixtures.cache[basePath + "first.htm"]).toBeDefined();
@@ -250,7 +250,7 @@ describe("jasmineFixtures", function(){
 		});
 
 		it("The configured basePath is prepend to each XHR request", function(){
-			var basePath = jasmineFixtures.setup().basePath;
+			const basePath = jasmineFixtures.setup().basePath;
 
 			jasmineFixtures.preload("first.htm");
 			expect(jQuery.ajax).toHaveBeenCalledWith({
@@ -340,7 +340,7 @@ describe("jasmineFixtures", function(){
 		describe("Given a chunk of CSS as string:", function(){
 
 			it("Inject the content of the given string inside a <style> tag located inside the <head>", function(){
-				var cssStr = jasmineFixtures.read("style.css");
+				const cssStr = jasmineFixtures.read("style.css");
 				expect(document.querySelectorAll("head style").length).toEqual(0);
 				jasmineFixtures.setCSS(cssStr);
 				expect(document.querySelectorAll("head style").length).toEqual(1);
@@ -352,8 +352,8 @@ describe("jasmineFixtures", function(){
 		describe("If invoked more than once in a row:", function(){
 
 			it("Will remove previously injected/loaded CSS, if any", function(){
-				var firstStr = jasmineFixtures.read("style.css");
-				var secondStr = jasmineFixtures.read("more.css");
+				const firstStr = jasmineFixtures.read("style.css");
+				const secondStr = jasmineFixtures.read("more.css");
 				jasmineFixtures.setCSS(firstStr);
 				jasmineFixtures.setCSS(secondStr);
 				expect(document.querySelectorAll("head style").length).toEqual(1);
@@ -392,12 +392,12 @@ describe("jasmineFixtures", function(){
 		describe("If called with no arguments. Return an object containing name/value pairs:", function(){
 
 			it("basePath", function(){
-				var config = jasmineFixtures.setup();
+				const config = jasmineFixtures.setup();
 				expect(config.basePath).toBeDefined();
 			});
 
 			it("containerId", function(){
-				var config = jasmineFixtures.setup();
+				const config = jasmineFixtures.setup();
 				expect(config.containerId).toBeDefined();
 			});
 
