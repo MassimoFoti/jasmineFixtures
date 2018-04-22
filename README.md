@@ -3,6 +3,7 @@
 A set of API for handling HTML, CSS, JSON, XML and plain text fixtures in your [Jasmine](http://jasmine.github.io/) specs
 
 Heavily inspired by [jasmine-jquery](https://github.com/velesin/jasmine-jquery) it provides a simple, lean alternative for a smaller set of features
+jasmineFixtures is designed to work in IE11+ and most recent versions of Chrome, FireFox, Edge and Safari
 
 ## Installation
 
