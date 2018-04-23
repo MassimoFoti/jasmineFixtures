@@ -199,6 +199,35 @@ describe("jasmineFixtures", function(){
 
 	});
 
+	describe(".isJson()", function(){
+
+		it("Return true if the given argument is JSON", function(){
+			expect(jasmineFixtures.isJson({})).toEqual(true);
+			expect(jasmineFixtures.isJson("{}")).toEqual(true);
+			expect(jasmineFixtures.isJson({"pro": "test"})).toEqual(true);
+			expect(jasmineFixtures.isJson("{\"pro\": \"test\"}")).toEqual(true);
+			expect(jasmineFixtures.isJson([1, 2, 3])).toEqual(true);
+			expect(jasmineFixtures.isJson("[1, 2, 3]")).toEqual(true);
+		});
+
+		it("False otherwise", function(){
+			expect(jasmineFixtures.isJson(123)).toEqual(false);
+			expect(jasmineFixtures.isJson("123")).toEqual(false);
+			expect(jasmineFixtures.isJson(0)).toEqual(false);
+			expect(jasmineFixtures.isJson("0")).toEqual(false);
+			expect(jasmineFixtures.isJson(false)).toEqual(false);
+			expect(jasmineFixtures.isJson("false")).toEqual(false);
+			expect(jasmineFixtures.isJson(true)).toEqual(false);
+			expect(jasmineFixtures.isJson("true")).toEqual(false);
+			expect(jasmineFixtures.isJson(null)).toEqual(false);
+			expect(jasmineFixtures.isJson("null")).toEqual(false);
+			expect(jasmineFixtures.isJson(undefined)).toEqual(false);
+			expect(jasmineFixtures.isJson("undefined")).toEqual(false);
+			expect(jasmineFixtures.isJson("Test")).toEqual(false);
+		});
+
+	});
+
 	describe(".loadHTML()", function(){
 
 		describe("First:", function(){

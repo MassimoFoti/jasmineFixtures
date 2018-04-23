@@ -1,5 +1,5 @@
 /*! 
-jasmineFixtures 1.0 2018-04-23T06:27:18.160Z
+jasmineFixtures 1.0 2018-04-23T09:19:28.304Z
 https://github.com/MassimoFoti/jasmineFixtures
 Copyright 2017-2018 Massimo Foti (massimo@massimocorner.com)
 Licensed under the Apache License, Version 2.0 | http://www.apache.org/licenses/LICENSE-2.0
@@ -221,7 +221,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 				if(response.responseXML !== null){
 					jasmineFixtures.cache[url] = response.responseXML;
 				}
-				else if(stringEndsWith(url, ".json") === true){
+				else if(jasmineFixtures.isJson(response.responseText) === true){
 					jasmineFixtures.cache[url] = JSON.parse(response.responseText);
 				}
 				else{
@@ -238,12 +238,24 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	};
 
 	/**
-	 * @param {String} str
-	 * @param {String} search
-	 * @return {Boolean}
+	 * Since we use sync XHR, we can't rely on responseType being available (it's always an empty string)
+	 * So we need to use some heuristic to understand if what we've got is JSON or not
+	 * This is not the most efficient, but does the job and covers plenty of cases (see unit tests)
+	 * @param {*} item
+	 * @returns {Boolean}
 	 */
-	const stringEndsWith = function(str, search){
-		return str.substring(str.length - search.length, str.length) === search;
+	jasmineFixtures.isJson = function(item){
+		item = typeof item !== "string" ? JSON.stringify(item) : item;
+		try{
+			item = JSON.parse(item);
+		}
+		catch(e){
+			return false;
+		}
+		if(typeof item === "object" && item !== null){
+			return true;
+		}
+		return false;
 	};
 
 	/* XHR */
