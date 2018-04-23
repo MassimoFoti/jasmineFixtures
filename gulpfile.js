@@ -4,36 +4,39 @@
 
 "use strict";
 
-var gulp = require("gulp");
-var changed = require("gulp-changed");
-var fs = require("fs");
-var header = require("gulp-header");
-var rename = require("gulp-rename");
-var runSequence = require("run-sequence");
-var sourcemaps = require("gulp-sourcemaps");
-var uglify = require("gulp-uglify");
-var zip = require("gulp-zip");
-var karmaServer = require("karma").Server;
+const gulp = require("gulp");
+const changed = require("gulp-changed");
+const fs = require("fs");
+const header = require("gulp-header");
+const rename = require("gulp-rename");
+const runSequence = require("run-sequence");
+const sourcemaps = require("gulp-sourcemaps");
+const composer = require("gulp-uglify/composer");
+const uglifyes = require("uglify-es");
+const uglify = composer(uglifyes, console);
+const zip = require("gulp-zip");
+const karmaServer = require("karma").Server;
 
-var pkg = require("./package.json");
+const pkg = require("./package.json");
 
-var CONST = {
+const CONST = {
 	SRC_FOLDER: "src",
 	DIST_FOLDER: "dist",
 	MIN_SUFFIX: ".min.js",
 	JS_SRC: "src/jasmineFixtures.js",
-	FOLDERS_TO_ARCHIVE: ["LICENSE", "README.md", "dist/**/*", "lib/**/*", "src/**/*", "test/**/*"],
+	FOLDERS_TO_ARCHIVE: ["LICENSE", "README.md", "dist/**/*", "src/**/*", "test/**/*"],
 	ARCHIVE_FILE: "jasmineFixtures.zip",
 	ARCHIVE_FOLDER: "archive",
 	VERSION_PATTERN: new RegExp("version = \"(\\d.\\d(.\\d)?)\";")
 };
 
 function assembleBanner(version){
-	var now = new Date();
-	var banner = [
+	const now = new Date();
+	const banner = [
 		"/*! ",
 		pkg.name + " " + version + " " + now.toISOString(),
-		"Copyright " + now.getFullYear() + " Massimo Foti (massimo@massimocorner.com)",
+		pkg.homepage,
+		"Copyright 2017-" + now.getFullYear() + " Massimo Foti (massimo@massimocorner.com)",
 		"Licensed under the Apache License, Version 2.0 | http://www.apache.org/licenses/LICENSE-2.0",
 		" */",
 		""].join("\n");
@@ -41,9 +44,9 @@ function assembleBanner(version){
 }
 
 function getJsVersion(){
-	var buffer = fs.readFileSync(CONST.JS_SRC);
-	var fileStr = buffer.toString("utf8", 0, buffer.length);
-	var version = CONST.VERSION_PATTERN.exec(fileStr)[1];
+	const buffer = fs.readFileSync(CONST.JS_SRC);
+	const fileStr = buffer.toString("utf8", 0, buffer.length);
+	const version = CONST.VERSION_PATTERN.exec(fileStr)[1];
 	return version;
 }
 
@@ -55,7 +58,7 @@ gulp.task("coverage", function(done){
 });
 
 gulp.task("js", function(){
-	var jsVersion = getJsVersion();
+	const jsVersion = getJsVersion();
 	return gulp.src(CONST.JS_SRC)
 		.pipe(sourcemaps.init())
 		// The "changed" task needs to know the destination directory
