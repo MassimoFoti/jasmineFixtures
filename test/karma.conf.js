@@ -11,8 +11,6 @@ module.exports = function(config) {
 		browsers: ["Chrome"],
 		frameworks: ["jasmine"],
 		files: [
-			// Libs
-			"lib/jquery/jquery.min.js",
 			// Config
 			"test/fixtures.karma.config.js",
 

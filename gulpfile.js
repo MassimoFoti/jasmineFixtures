@@ -24,7 +24,7 @@ const CONST = {
 	DIST_FOLDER: "dist",
 	MIN_SUFFIX: ".min.js",
 	JS_SRC: "src/jasmineFixtures.js",
-	FOLDERS_TO_ARCHIVE: ["LICENSE", "README.md", "dist/**/*", "lib/**/*", "src/**/*", "test/**/*"],
+	FOLDERS_TO_ARCHIVE: ["LICENSE", "README.md", "dist/**/*", "src/**/*", "test/**/*"],
 	ARCHIVE_FILE: "jasmineFixtures.zip",
 	ARCHIVE_FOLDER: "archive",
 	VERSION_PATTERN: new RegExp("version = \"(\\d.\\d(.\\d)?)\";")

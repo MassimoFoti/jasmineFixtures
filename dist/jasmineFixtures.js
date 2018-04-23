@@ -1,5 +1,5 @@
 /*! 
-jasmineFixtures 1.0 2018-04-22T20:11:26.088Z
+jasmineFixtures 1.0 2018-04-23T05:28:56.739Z
 https://github.com/MassimoFoti/jasmineFixtures
 Copyright 2017-2018 Massimo Foti (massimo@massimocorner.com)
 Licensed under the Apache License, Version 2.0 | http://www.apache.org/licenses/LICENSE-2.0
@@ -211,16 +211,80 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	 * @param {String} url
 	 */
 	const readIntoCache = function(url){
-		jQuery.ajax({
-			url: url,
-			async: false, // Must be synchronous to ensure fixtures are loaded before test run
-			cache: false,
-			method: "GET"
-		}).done(function(data){
-			jasmineFixtures.cache[url] = data;
-		}).fail(function(jqXHR){
-			throw ("Failed to retrieve fixture at: " + url + " (status: " + jqXHR.status + ")");
-		});
+
+		const xhrOptions = {
+			success: function(response){
+				if(response.responseXML !== null){
+					jasmineFixtures.cache[url] = response.responseXML;
+				}
+				else if(stringEndsWith(url, ".json") === true){
+					jasmineFixtures.cache[url] = JSON.parse(response.responseText);
+				}
+				else{
+					jasmineFixtures.cache[url] = response.responseText;
+				}
+			},
+			error: function(response){
+				throw ("Failed to retrieve fixture at: " + url + " (status: " + response.status + ")");
+			}
+		};
+		const xhr = new jasmineFixtures.xhr.Request(xhrOptions);
+
+		xhr.send(url);
+	};
+
+	const stringEndsWith = function(string, search){
+		return string.substring(string.length - search.length, string.length) === search;
+	};
+
+	/* XHR */
+
+	jasmineFixtures.xhr = {};
+
+	jasmineFixtures.xhr.Request = function(options){
+		const config = {
+			method: "GET",
+			success: options.success,
+			error: options.error,
+			async: false
+		};
+
+		const self = this;
+		self.xhr = new XMLHttpRequest();
+
+		/**
+		 * @return {jasmineFixtures.xhr.response}
+		 */
+		const assembleResponse = function(){
+			return {
+				status: self.xhr.status,
+				statusText: self.xhr.statusText,
+				responseText: self.xhr.responseText,
+				responseXML: self.xhr.responseXML
+			};
+		};
+
+		const checkReadyState = function(){
+			if(self.xhr.readyState === 4){
+				const httpStatus = self.xhr.status;
+				if((httpStatus >= 200 && httpStatus <= 300) || (httpStatus === 304)){
+					config.success(assembleResponse());
+				}
+				else{
+					config.error(assembleResponse());
+				}
+			}
+		};
+
+		/**
+		 * @param {String} url
+		 */
+		this.send = function(url){
+			self.xhr.open(config.method, url, config.async);
+			self.xhr.onreadystatechange = checkReadyState;
+			self.xhr.send(null);
+		};
+
 	};
 
 }());
