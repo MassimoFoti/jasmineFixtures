@@ -201,6 +201,10 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 		return jasmineFixtures.cache[assembleUrl(path)];
 	};
 
+	jasmineFixtures.failure = function(url, status){
+		throw ("Failed to retrieve fixture at: " + url + " (status: " + status + ")");
+	};
+
 	/**
 	 * @param {String} url
 	 */
@@ -219,7 +223,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 				}
 			},
 			error: function(response){
-				throw ("Failed to retrieve fixture at: " + url + " (status: " + response.status + ")");
+				jasmineFixtures.failure(url, response.status);
 			}
 		};
 		const xhr = new jasmineFixtures.xhr.Request(xhrOptions);
@@ -227,22 +231,29 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 		xhr.send(url);
 	};
 
-	const stringEndsWith = function(string, search){
-		return string.substring(string.length - search.length, string.length) === search;
+	/**
+	 * @param {String} str
+	 * @param {String} search
+	 * @return {Boolean}
+	 */
+	const stringEndsWith = function(str, search){
+		return str.substring(str.length - search.length, str.length) === search;
 	};
 
 	/* XHR */
 
+	/**
+	 * @typedef {Object} jasmineFixtures.xhr.response
+	 *
+	 * @property {Number}       status              Status code returned by the HTTP server
+	 * @property {String}       statusText          The response string returned by the HTTP server
+	 * @property {String|null}  responseText        The response as text, null if the request was unsuccessful
+	 * @property {String|null}  responseXML         The response as text, null if the request was unsuccessful or cannot be parsed as XML or HTML
+	 */
+
 	jasmineFixtures.xhr = {};
 
 	jasmineFixtures.xhr.Request = function(options){
-		const config = {
-			method: "GET",
-			success: options.success,
-			error: options.error,
-			async: false
-		};
-
 		const self = this;
 		self.xhr = new XMLHttpRequest();
 
@@ -259,13 +270,14 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 		};
 
 		const checkReadyState = function(){
+			/* istanbul ignore else */
 			if(self.xhr.readyState === 4){
 				const httpStatus = self.xhr.status;
 				if((httpStatus >= 200 && httpStatus <= 300) || (httpStatus === 304)){
-					config.success(assembleResponse());
+					options.success(assembleResponse());
 				}
 				else{
-					config.error(assembleResponse());
+					options.error(assembleResponse());
 				}
 			}
 		};
@@ -274,7 +286,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 		 * @param {String} url
 		 */
 		this.send = function(url){
-			self.xhr.open(config.method, url, config.async);
+			self.xhr.open("GET", url, false);
 			self.xhr.onreadystatechange = checkReadyState;
 			self.xhr.send(null);
 		};

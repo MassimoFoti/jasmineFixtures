@@ -189,6 +189,16 @@ describe("jasmineFixtures", function(){
 
 	});
 
+	describe(".failure()", function(){
+
+		it("Throw an exception with the given url and status code inside the message", function(){
+			expect(function(){
+				jasmineFixtures.failure("testUrl", 500);
+			}).toThrow("Failed to retrieve fixture at: testUrl (status: 500)");
+		});
+
+	});
+
 	describe(".loadHTML()", function(){
 
 		describe("First:", function(){
@@ -249,15 +259,15 @@ describe("jasmineFixtures", function(){
 			expect(jasmineFixtures.xhr.Request).toHaveBeenCalled();
 		});
 
-		xit("The configured basePath is prepend to each XHR request", function(){
+		it("The configured basePath is prepend to each XHR request", function(){
 
 			jasmineFixtures.preload("first.htm");
+			spyOn(jasmineFixtures, "failure");
 
 			jasmineFixtures.setup({basePath: "missingfolder/"});
 			// Due to changed basePath this now points to a 404
-			expect(function(){
-				jasmineFixtures.read("first.htm");
-			}).toThrow();
+			jasmineFixtures.read("first.htm");
+			expect(jasmineFixtures.failure).toHaveBeenCalledWith("missingfolder/first.htm", 404);
 		});
 
 		it("Only one XHR call is executed if the same fixture is read multiple times", function(){
@@ -268,10 +278,10 @@ describe("jasmineFixtures", function(){
 			expect(jasmineFixtures.xhr.Request).toHaveBeenCalledTimes(2);
 		});
 
-		xit("Throws an error if the XHR call fails", function(){
-			expect(function(){
-				jasmineFixtures.read("missing.htm");
-			}).toThrow();
+		it("Invokes jasmineFixtures.failure() if the XHR call fails", function(){
+			spyOn(jasmineFixtures, "failure");
+			jasmineFixtures.read("missing.htm");
+			expect(jasmineFixtures.failure).toHaveBeenCalledWith(jasmineFixtures.setup().basePath + "missing.htm", 404);
 		});
 
 	});
