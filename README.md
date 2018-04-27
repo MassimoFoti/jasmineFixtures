@@ -105,10 +105,10 @@ The following methods are provided:
 ## Mocking with jasmine-ajax
 
 [jasmine-ajax](https://github.com/jasmine/jasmine-ajax) library overrides XMLHttpRequest automatically when `jasmine.Ajax.install()` is called. 
-This breaks jasmineFixtures, as its fixture loading mechanism uses jQuery.ajax, that stops working once the mock is installed. 
+This breaks jasmineFixtures, as its fixture loading mechanism uses XMLHttpRequest, that stops working once the mock is installed. 
 
 A workaround for this may be to invoke `jasmineFixtures.preload` function (specifying all required fixtures) before jasmine-ajax is loaded. 
-This way subsequent calls to load or read methods will retrieve fixtures content from cache, without need to use jQuery.ajax and thus will work correctly even after jasmine-ajax is loaded.
+This way subsequent calls to load or read methods will retrieve fixtures content from cache, without need to use XMLHttpRequest and thus will work correctly even after jasmine-ajax is loaded.
 
 As an alternative you can call jasmineFixtures before `jasmine.Ajax.install()` is invoked.
 
