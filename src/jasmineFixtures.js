@@ -6,8 +6,8 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 /**
  * @typedef {Object} jasmineFixtures.options
  *
- * @property {String} basePath        Base path for fixtures. Default to "fixtures/"
- * @property {String} containerId     Used as id attribute for the <div> where fixtures are loaded. Default to "jasmine-fixtures"
+ * @property {string} basePath        Base path for fixtures. Default to "fixtures/"
+ * @property {string} containerId     Used as id attribute for the <div> where fixtures are loaded. Default to "jasmine-fixtures"
  */
 
 (function(){
@@ -29,7 +29,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	const styleNodes = [];
 
 	/**
-	 * @type {Object.<String, String>}
+	 * @type {Object.<string, string>}
 	 */
 	jasmineFixtures.cache = {};
 
@@ -51,7 +51,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	};
 
 	/**
-	 * @param {String} path
+	 * @param {string} path
 	 */
 	jasmineFixtures.appendCSS = function(path){
 		jasmineFixtures.preload(path);
@@ -59,7 +59,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	};
 
 	/**
-	 * @param {String} path
+	 * @param {string} path
 	 */
 	jasmineFixtures.appendHTML = function(path){
 		jasmineFixtures.preload(path);
@@ -67,7 +67,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	};
 
 	/**
-	 * @param {String} path
+	 * @param {string} path
 	 */
 	jasmineFixtures.loadCSS = function(path){
 		jasmineFixtures.preload(path);
@@ -76,7 +76,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	};
 
 	/**
-	 * @param {String} path
+	 * @param {string} path
 	 */
 	jasmineFixtures.loadHTML = function(path){
 		jasmineFixtures.preload(path);
@@ -84,7 +84,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	};
 
 	/**
-	 * @param {String|Array.<String>} path
+	 * @param {string|Array.<string>} path
 	 */
 	jasmineFixtures.preload = function(path){
 		if(typeof path === "string"){
@@ -99,8 +99,8 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	};
 
 	/**
-	 * @param {String} path
-	 * @return {String|Object}
+	 * @param {string} path
+	 * @return {string|Object}
 	 */
 	jasmineFixtures.read = function(path){
 		jasmineFixtures.preload(path);
@@ -108,7 +108,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	};
 
 	/**
-	 * @param {String} css
+	 * @param {string} css
 	 */
 	jasmineFixtures.setCSS = function(css){
 		jasmineFixtures.clearCSS();
@@ -116,7 +116,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	};
 
 	/**
-	 * @param {String} html
+	 * @param {string} html
 	 */
 	jasmineFixtures.setHTML = function(html){
 		loadIntoContainer(html);
@@ -144,7 +144,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	};
 
 	/**
-	 * @param {String} css
+	 * @param {string} css
 	 */
 	const appendStyle = function(css){
 		const cssNode = document.createElement("style");
@@ -154,7 +154,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	};
 
 	/**
-	 * @param {String} html
+	 * @param {string} html
 	 */
 	const appendToContainer = function(html){
 		const container = getContainer();
@@ -162,8 +162,8 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	};
 
 	/**
-	 * @param {String} path
-	 * @return {String}
+	 * @param {string} path
+	 * @return {string}
 	 */
 	const assembleUrl = function(path){
 		return config.basePath + path;
@@ -186,7 +186,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	};
 
 	/**
-	 * @param {String} html
+	 * @param {string} html
 	 */
 	const loadIntoContainer = function(html){
 		const container = getContainer();
@@ -194,8 +194,8 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	};
 
 	/**
-	 * @param {String} path
-	 * @return {String|Object}
+	 * @param {string} path
+	 * @return {string|Object}
 	 */
 	const readFromCache = function(path){
 		return jasmineFixtures.cache[assembleUrl(path)];
@@ -206,7 +206,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	};
 
 	/**
-	 * @param {String} url
+	 * @param {string} url
 	 */
 	const readIntoCache = function(url){
 
@@ -236,7 +236,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	 * So we need to use some heuristic to understand if what we've got is JSON or not
 	 * This is not the most efficient, but does the job and covers plenty of cases (see unit tests)
 	 * @param {*} item
-	 * @returns {Boolean}
+	 * @return {boolean}
 	 */
 	jasmineFixtures.isJson = function(item){
 		item = typeof item !== "string" ? JSON.stringify(item) : item;
@@ -257,10 +257,10 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 	/**
 	 * @typedef {Object} jasmineFixtures.xhr.response
 	 *
-	 * @property {Number}       status              Status code returned by the HTTP server
-	 * @property {String}       statusText          The response string returned by the HTTP server
-	 * @property {String|null}  responseText        The response as text, null if the request was unsuccessful
-	 * @property {String|null}  responseXML         The response as text, null if the request was unsuccessful or cannot be parsed as XML or HTML
+	 * @property {number}       status              Status code returned by the HTTP server
+	 * @property {string}       statusText          The response string returned by the HTTP server
+	 * @property {string|null}  responseText        The response as text, null if the request was unsuccessful
+	 * @property {string|null}  responseXML         The response as text, null if the request was unsuccessful or cannot be parsed as XML or HTML
 	 */
 
 	jasmineFixtures.xhr = {};
@@ -295,7 +295,7 @@ if(typeof(window.jasmineFixtures) === "undefined"){
 		};
 
 		/**
-		 * @param {String} url
+		 * @param {string} url
 		 */
 		this.send = function(url){
 			self.xhr.open("GET", url, false);
